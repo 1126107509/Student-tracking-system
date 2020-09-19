@@ -3,7 +3,7 @@ package studentTracking.model;
 /**
  * 用户角色分配实体类
  */
-public class userRoleRelation {
+public class UserRoleRelation {
     /**
      * 用户id
      */
