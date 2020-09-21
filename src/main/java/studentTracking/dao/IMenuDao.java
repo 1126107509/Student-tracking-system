@@ -10,9 +10,9 @@ import java.util.List;
 public interface IMenuDao {
 
     /**
-     * 获取所有的管理员菜单
+     * 获取所有的管理员一级菜单
      * @return
      */
-   List<Menu> listMenu();
+    List<Menu> listMainMenu();
 
 }
