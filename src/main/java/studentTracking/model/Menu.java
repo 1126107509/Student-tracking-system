@@ -29,6 +29,10 @@ public class Menu {
      */
     private String address;
 
+    /**
+     *菜单类型 0管理员 1教师 2学生
+     */
+    private int menuType;
 
 
     private String promptName;
@@ -42,11 +46,21 @@ public class Menu {
     public Menu() {
     }
 
-    public Menu(long parentMenuId, String menuName, List<Menu> sonMeus, String address) {
+    public Menu(long parentMenuId, String menuName, List<Menu> sonMeus, String address,
+                int menuType) {
         this.parentMenuId = parentMenuId;
         this.menuName = menuName;
         this.sonMeus = sonMeus;
         this.address = address;
+        this.menuType = menuType;
+    }
+
+    public int getMenuType() {
+        return menuType;
+    }
+
+    public void setMenuType(int menuType) {
+        this.menuType = menuType;
     }
 
     public long getMenuId() {
