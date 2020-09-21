@@ -6,8 +6,13 @@
         <id column="menuId" property="menuId"></id>
         <result column="parentMenuId" property="parentMenuId"></result>
         <result column="menuName" property="menuName"></result>
+<<<<<<< HEAD
         <collection property="sonMeus" column="menuId" ofType="menu"
                      select="listSonMenu"></collection>
+=======
+        <!--<collection property="sonMeus" column="menuid" ofType="menu"
+                    resultMap="basemenu" select="listSonMenu"></collection>-->
+>>>>>>> origin/master
     </resultMap>
 
 
@@ -16,7 +21,11 @@
     </select>
 
     <select id="listSonMenu" resultMap="basemenu" >
+<<<<<<< HEAD
         select menuId,parentMenuId,menuName  from menu where menuType = 0 and parentMenuId = #{menuId}
+=======
+        select menuId,parentMenuId,menuName  from menu where menuType = 0 and parentMenuId = #{menuid}
+>>>>>>> origin/master
     </select>
 
 

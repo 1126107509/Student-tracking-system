@@ -2,5 +2,42 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="studentTracking.dao.IStudentDao">
+    <sql id="baseSql">
+        SELECT
+            s.stuId,
+            s.stuName,
+            s.sex,
+            s.nation,
+            s.birthday,
+            s.birthPlace,
+            s.marry,
+            s.telephone,
+            s.idcard,
+            s.university,
+            s.major,
+            s.photo,
+            s.note,
+            s.state,
+            s.classid,
+            s.deptid
+    </sql>
 
+    <!--List<Student> getAllStuByTeacher(long teacherId);-->
+    <select id="getAllStuByTeacher" resultType="Student">
+        <include refid="baseSql"></include>
+        FROM
+        student s
+        LEFT JOIN class c ON s.classId = c.classId
+        LEFT JOIN `user` u ON u.userId = #{teacherId}
+    </select>
+
+    <!--List<Student> getStuByTeacher(@Param("page") int page, @Param("limit") int limit, @Param("teacherId") long teacherId);-->
+    <select id="getStuByTeacher" resultType="Student">
+        <include refid="baseSql"></include>
+        FROM
+        student s
+        LEFT JOIN class c ON s.classId = c.classId
+        LEFT JOIN `user` u ON u.userId = #{teacherId}
+        LIMIT #{page}, #{limit}
+    </select>
 </mapper>
