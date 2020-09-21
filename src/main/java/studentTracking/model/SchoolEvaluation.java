@@ -1,7 +1,7 @@
 package studentTracking.model;
 
 /**
- * 培训学校实体类
+ * 培训学校评价实体类
  */
 public class SchoolEvaluation {
     /**
