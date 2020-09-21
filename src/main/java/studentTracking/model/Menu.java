@@ -1,5 +1,7 @@
 package studentTracking.model;
 
+import java.util.List;
+
 /**
  * 菜单实体类
  */
@@ -16,10 +18,19 @@ public class Menu {
      * 菜单名单
      */
     private String menuName;
+
+    //存取子菜单
+    private List<Menu> sonMeus;
+
+
+
     /**
      * 菜单路径
      */
     private String address;
+
+
+
     private String promptName;
     private String goal;
     private String image;
@@ -27,6 +38,16 @@ public class Menu {
     private String menuShow;
     private String expressshun;
     private String deleteFlag;
+
+    public Menu() {
+    }
+
+    public Menu(long parentMenuId, String menuName, List<Menu> sonMeus, String address) {
+        this.parentMenuId = parentMenuId;
+        this.menuName = menuName;
+        this.sonMeus = sonMeus;
+        this.address = address;
+    }
 
     public long getMenuId() {
         return menuId;
@@ -114,5 +135,24 @@ public class Menu {
 
     public void setDeleteFlag(String deleteFlag) {
         this.deleteFlag = deleteFlag;
+    }
+
+    public List<Menu> getSonMeus() {
+        return sonMeus;
+    }
+
+    public void setSonMeus(List<Menu> sonMeus) {
+        this.sonMeus = sonMeus;
+    }
+
+    @Override
+    public String toString() {
+        return "Menu{" +
+                "menuId=" + menuId +
+                ", parentMenuId=" + parentMenuId +
+                ", menuName='" + menuName + '\'' +
+                ", sonMeus=" + sonMeus +
+                ", address='" + address + '\'' +
+                '}';
     }
 }
