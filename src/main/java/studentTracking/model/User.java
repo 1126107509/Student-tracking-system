@@ -35,7 +35,7 @@ public class User {
     /**
      * 标识
      */
-    private long flag;
+    private int flag;
     /**
      * 登录时间
      */
@@ -101,11 +101,11 @@ public class User {
         this.note = note;
     }
 
-    public long getFlag() {
+    public String getFlag() {
         return flag;
     }
 
-    public void setFlag(long flag) {
+    public void setFlag(String flag) {
         this.flag = flag;
     }
 
