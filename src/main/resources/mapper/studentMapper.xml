@@ -32,12 +32,38 @@
     </select>
 
     <!--List<Student> getStuByTeacher(@Param("page") int page, @Param("limit") int limit, @Param("teacherId") long teacherId);-->
-    <select id="getStuByTeacher" resultType="Student">
-        <include refid="baseSql"></include>
+    <select id="getStuByTeacher" resultMap="StuAndSco">
+        <include refid="baseSql"></include>,
+        sc.courseId,
+        sc.score
         FROM
         student s
         LEFT JOIN class c ON s.classId = c.classId
         LEFT JOIN `user` u ON u.userId = #{teacherId}
+        LEFT JOIN score sc ON sc.stuId = s.stuId
         LIMIT #{page}, #{limit}
     </select>
+    <resultMap id="StuAndSco" type="Student">
+        <id column="stuId" property="stuId"></id>
+        <result column="stuName" property="stuName"></result>
+        <result column="sex" property="sex"></result>
+        <result column="nation" property="nation"></result>
+        <result column="birthday" property="birthday"></result>
+        <result column="birthPlace" property="birthPlace"></result>
+        <result column="marry" property="marry"></result>
+        <result column="telephone" property="telephone"></result>
+        <result column="idCard" property="idCard"></result>
+        <result column="university" property="university"></result>
+        <result column="major" property="major"></result>
+        <result column="photo" property="photo"></result>
+        <result column="note" property="note"></result>
+        <result column="state" property="state"></result>
+        <result column="classId" property="classId"></result>
+        <result column="deptId" property="deptId"></result>
+        <collection property="scoreList" javaType="list" ofType="Score">
+            <id column="stuId" property="stuId"></id>
+            <result column="courseId" property="courseId"></result>
+            <result column="score" property="score"></result>
+        </collection>
+    </resultMap>
 </mapper>

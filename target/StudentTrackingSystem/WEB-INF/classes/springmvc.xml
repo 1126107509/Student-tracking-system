@@ -10,7 +10,6 @@
     http://www.springframework.org/schema/mvc
     http://www.springframework.org/schema/mvc/spring-mvc.xsd">
     <!--开启springmvc注解，数据绑定，数字@NumberFormat和日期的format@DateTimeFormat，xml和json默认读写支持-->
-<<<<<<< HEAD
     <mvc:annotation-driven>
         <mvc:message-converters>
             <bean class="org.springframework.http.converter.StringHttpMessageConverter" >
@@ -18,9 +17,6 @@
             </bean>
         </mvc:message-converters>
     </mvc:annotation-driven>
-=======
-    <mvc:annotation-driven/>
->>>>>>> origin/master
     <!--扫描web相关的bean-->
     <context:component-scan base-package="studentTracking.controller"/>
     <!--如果将DispatcherServlet请求映射配置为"/"，
