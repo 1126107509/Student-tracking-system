@@ -6,26 +6,18 @@
         <id column="menuId" property="menuId"></id>
         <result column="parentMenuId" property="parentMenuId"></result>
         <result column="menuName" property="menuName"></result>
-<<<<<<< HEAD
-        <collection property="sonMeus" column="menuId" ofType="menu"
+        <result column="imageShow" property="imageShow"></result>
+        <collection property="sonMenus" column="menuId" ofType="menu"
                      select="listSonMenu"></collection>
-=======
-        <!--<collection property="sonMeus" column="menuid" ofType="menu"
-                    resultMap="basemenu" select="listSonMenu"></collection>-->
->>>>>>> origin/master
     </resultMap>
 
 
     <select id="listMainMenu" resultMap="basemenu" >
-        select menuId,parentMenuId,menuName  from menu where menuType = 0 and parentMenuId = 0
+        select menuId,parentMenuId,menuName,imageShow  from menu where menuType = 0 and parentMenuId = 0
     </select>
 
     <select id="listSonMenu" resultMap="basemenu" >
-<<<<<<< HEAD
-        select menuId,parentMenuId,menuName  from menu where menuType = 0 and parentMenuId = #{menuId}
-=======
-        select menuId,parentMenuId,menuName  from menu where menuType = 0 and parentMenuId = #{menuid}
->>>>>>> origin/master
+        select menuId,parentMenuId,menuName,imageShow  from menu where menuType = 0 and parentMenuId = #{menuId}
     </select>
 
 
