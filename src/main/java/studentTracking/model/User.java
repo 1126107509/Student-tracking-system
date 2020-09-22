@@ -17,10 +17,6 @@ public class User {
      */
     private String pwd;
     /**
-     * 固定电话
-     */
-    private String telephone;
-    /**
      * 手机
      */
     private String phone;
@@ -40,10 +36,7 @@ public class User {
      * 登录时间
      */
     private String loginTime;
-    /**
-     * 部门编号
-     */
-    private long deptno;
+
 
     public long getUserId() {
         return userId;
@@ -67,14 +60,6 @@ public class User {
 
     public void setPwd(String pwd) {
         this.pwd = pwd;
-    }
-
-    public String getTelephone() {
-        return telephone;
-    }
-
-    public void setTelephone(String telephone) {
-        this.telephone = telephone;
     }
 
     public String getPhone() {
@@ -117,11 +102,4 @@ public class User {
         this.loginTime = loginTime;
     }
 
-    public long getDeptno() {
-        return deptno;
-    }
-
-    public void setDeptno(long deptno) {
-        this.deptno = deptno;
-    }
 }

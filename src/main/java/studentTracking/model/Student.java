@@ -69,6 +69,32 @@ public class Student {
      */
     private long deptId;
 
+    /**
+     * 邮箱
+     */
+    private String email;
+
+    private long userID;
+
+    public Student() {
+    }
+
+    public long getUserID() {
+        return userID;
+    }
+
+    public void setUserID(long userID) {
+        this.userID = userID;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public long getStuId() {
         return stuId;
     }
