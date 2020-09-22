@@ -93,12 +93,12 @@ $(function () {
 
             if (step + i == length) {
                 setTimeout(' ', 150);
-                var path = '../static/images/zi-' + (i) + '.png';
+                var path = '../../static/images/zi-' + (i) + '.png';
                 $(imgs[length - 1]).prop('src', path);
                 for (var j = 0; j < step; j++) {
 
 
-                    var path = '../static/images/zi-' + (i + j + 1) + '.png';
+                    var path = '../../static/images/zi-' + (i + j + 1) + '.png';
                     $(imgs[j]).prop("src", path);
                     setTimeout(' ', 150);
 
@@ -107,7 +107,7 @@ $(function () {
 
             } else {
                 setTimeout('', 150);
-                var path = '../static/images/zi-' + (i + 1) + '.png';
+                var path = '../../static/images/zi-' + (i + 1) + '.png';
                 $(imgs[step + i]).prop('src', path);
             }
 

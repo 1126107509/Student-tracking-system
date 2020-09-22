@@ -1,5 +1,7 @@
 package studentTracking.controller;
 
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +24,9 @@ public class Administrators {
     @ResponseBody
     public String showMenu() {
         List<Menu> menus = menuService.listMenu();
-        return menus.toString();
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("data", JSONArray.fromObject(menus));
+        System.out.println(JSONArray.fromObject(menus));
+        return jsonObject.toString();
     }
 }

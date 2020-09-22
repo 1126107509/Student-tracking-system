@@ -317,7 +317,7 @@ dl.active {
 }
 
 .error  {
-    height: 18px;
+    height: 22px;
     width: 225px;
     visibility: hidden;
 
@@ -329,9 +329,11 @@ dl.active {
     height: 18px;
     width: 18px;
     vertical-align: middle;
+    margin-bottom: 1px;
 }
 
 .error  span {
+
     font-size: 15px;
     padding-left: 8px;
     color: #FD482C;
