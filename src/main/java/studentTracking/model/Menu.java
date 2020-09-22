@@ -20,8 +20,7 @@ public class Menu {
     private String menuName;
 
     //存取子菜单
-    private List<Menu> sonMeus;
-
+    private List<Menu> sonMenus;
 
 
     /**
@@ -30,7 +29,7 @@ public class Menu {
     private String address;
 
     /**
-     *菜单类型 0管理员 1教师 2学生
+     * 菜单类型 0管理员 1教师 2学生
      */
     private int menuType;
 
@@ -38,7 +37,7 @@ public class Menu {
     private String promptName;
     private String goal;
     private String image;
-    private String imageShoe;
+    private String imageShow;
     private String menuShow;
     private String expressshun;
     private String deleteFlag;
@@ -46,11 +45,11 @@ public class Menu {
     public Menu() {
     }
 
-    public Menu(long parentMenuId, String menuName, List<Menu> sonMeus, String address,
+    public Menu(long parentMenuId, String menuName, List<Menu> sonMenus, String address,
                 int menuType) {
         this.parentMenuId = parentMenuId;
         this.menuName = menuName;
-        this.sonMeus = sonMeus;
+        this.sonMenus = sonMenus;
         this.address = address;
         this.menuType = menuType;
     }
@@ -119,12 +118,12 @@ public class Menu {
         this.image = image;
     }
 
-    public String getImageShoe() {
-        return imageShoe;
+    public String getImageShow() {
+        return imageShow;
     }
 
-    public void setImageShoe(String imageShoe) {
-        this.imageShoe = imageShoe;
+    public void setImageShow(String imageShow) {
+        this.imageShow = imageShow;
     }
 
     public String getMenuShow() {
@@ -151,12 +150,12 @@ public class Menu {
         this.deleteFlag = deleteFlag;
     }
 
-    public List<Menu> getSonMeus() {
-        return sonMeus;
+    public List<Menu> getSonMenus() {
+        return sonMenus;
     }
 
-    public void setSonMeus(List<Menu> sonMeus) {
-        this.sonMeus = sonMeus;
+    public void setSonMenus(List<Menu> sonMenus) {
+        this.sonMenus = sonMenus;
     }
 
     @Override
@@ -165,8 +164,9 @@ public class Menu {
                 "menuId=" + menuId +
                 ", parentMenuId=" + parentMenuId +
                 ", menuName='" + menuName + '\'' +
-                ", sonMeus=" + sonMeus +
+                ", sonMeus=" + sonMenus +
                 ", address='" + address + '\'' +
+                ", imageShow='" + imageShow + '\'' +
                 '}';
     }
 }

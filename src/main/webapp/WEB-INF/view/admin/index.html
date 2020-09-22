@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>管理员首页</title>
+    <link rel="stylesheet" href="../../../static/layui/css/layui.css">
+    <link rel="stylesheet" href="../../../static/layui/css/admin.css">
+    <link rel="stylesheet" href="../../../static/css/admin/index.css">
+    <script src="../../../static/js/jquery3.3.1.js"></script>
+    <script src="../../../static/js/admin/index.js"></script>
+
+</head>
+<body id="LAY_app" class="layadmin-side-shrink">
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <ul class="layui-nav layui-layout-left">
+            <li class="layui-nav-item layadmin-flexible" lay-unselect>
+                <a href="javascript:;" layadmin-event="flexible" title="侧边伸缩">
+                    <i class="layui-icon layui-icon-spread-left " id="LAY_app_flexible"></i>
+                </a>
+            </li>
+        </ul>
+        <ul class="layui-nav layui-layout-right">
+
+            <li class="layui-nav-item">
+                <a href="javascript:;">
+                    <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
+                    贤心
+                </a>
+                <dl class="layui-nav-child">
+                    <dd><a href="">基本资料</a></dd>
+                    <dd><a href="">安全设置</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item"><a href="">退了</a></li>
+        </ul>
+    </div>
+
+    <!-- 侧边菜单 -->
+    <div class="layui-side layui-side-menu">
+        <div class="layui-side-scroll">
+            <div class="layui-logo" lay-href="">
+                <!-- <span>layuiAdmin</span>-->
+                <i class="layui-icon layui-icon-home home"></i>
+            </div>
+
+            <ul class="layui-nav layui-nav-tree" lay-shrink="all" id="LAY-system-side-menu"
+                lay-filter="layadmin-system-side-menu">
+
+
+            </ul>
+        </div>
+    </div>
+
+    <div class="layui-body">
+        <!-- 内容主体区域 -->
+        <div style="padding: 15px;">内容主体区域</div>
+    </div>
+
+    <div class="layui-footer">
+        <!-- 底部固定区域 -->
+        © layui.com - 底部固定区域
+    </div>
+</div>
+
+<script src="../../../static/layui/layui.js"></script>
+
+
+<script>
+    var isShrink = true;
+
+    $('#LAY_app_flexible').click(function () {
+        $('#LAY_app').toggleClass('layadmin-side-shrink');
+        $('.home').toggleClass('home-actice');
+        if (isShrink) {
+            $('#LAY_app_flexible').removeClass('layui-icon-spread-right');
+            $('#LAY_app_flexible').addClass('layui-icon-shrink-left');
+            isShrink = false;
+        }
+        if (!isShrink) {
+            $('#LAY_app_flexible').removeClass('layui-icon-spread-left');
+            $('#LAY_app_flexible').addClass('layui-icon-shrink-right');
+            isShrink = false;
+        }
+
+    })
+    $(function () {
+
+
+        layui.use('element', function () {
+            var element = layui.element;
+
+        });
+
+        $('.hoverevent').hover(function () {
+            $('.hoverevent').removeClass('hover-bgcolor').removeClass('font-color1')
+            $(this).addClass('hover-bgcolor')
+            $(this).children().addClass('font-color1');
+
+        }, function () {
+            $(this).removeClass('hover-bgcolor')
+            $(this).children().removeClass('font-color1');
+        })
+
+
+        $('.unhover>a').click(function () {
+            var mythis = this;
+            $(this).toggleClass('unhover .hover-noChange')
+            $(this).addEventListener('hover', myhandler(mythis), false);
+        })
+
+
+        //addeventlistener()和removeeventlistener()中handler函数必须相同，移除事件函数才有效。
+        var remove = false;
+
+        function myhandler(obj) {
+            console.log("i have been clicked!");
+            if (!remove) {
+                $(obj).removeEventListener('hover', myhandler(obj), false);
+                remove = true;
+            }
+            return;
+        }
+
+    })
+
+</script>
+</body>
+
+
+</html>
