@@ -4,21 +4,35 @@ import com.alibaba.fastjson.JSONObject;
 import net.sf.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import studentTracking.model.Course;
+import studentTracking.model.Score;
 import studentTracking.model.Student;
+import studentTracking.service.ICourseService;
+import studentTracking.service.IScoreService;
 import studentTracking.service.IStudentService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
+@SessionAttributes({"courseList"})
 public class Teacher {
     @Autowired
     private IStudentService studentService;
+    @Autowired
+    private IScoreService scoreService;
+    @Autowired
+    private ICourseService courseService;
 
     @RequestMapping("/studentList")
-    public String studentList() {
-        return "studentList";
+    public String studentList(Model model) {
+        List<Course> courseList = courseService.getAllCourse();
+        model.addAttribute("courseList", courseList);
+        return "teacher/studentList";
     }
 
     /**
@@ -42,6 +56,7 @@ public class Teacher {
 
         //根据老师id查询到的所有学生信息
         List<Student> studentList = studentService.getAllStuByTeacher(tId);
+
         //根据老师id分页查询到的所有学生信息
         List<Student> studentListByPage = studentService.getStuByTeacher(page, limit, tId);
 

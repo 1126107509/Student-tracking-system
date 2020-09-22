@@ -1,5 +1,7 @@
 package studentTracking.model;
 
+import java.util.List;
+
 /**
  * 学生实体类
  */
@@ -68,6 +70,10 @@ public class Student {
      * 部门id
      */
     private long deptId;
+    /**
+     * 分数
+     */
+    private List<Score> scoreList;
 
     /**
      * 邮箱
@@ -221,5 +227,13 @@ public class Student {
 
     public void setDeptId(long deptId) {
         this.deptId = deptId;
+    }
+
+    public List<Score> getScoreList() {
+        return scoreList;
+    }
+
+    public void setScoreList(List<Score> scoreList) {
+        this.scoreList = scoreList;
     }
 }
