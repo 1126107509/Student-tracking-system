@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: Administrator
@@ -22,30 +23,18 @@
             </colgroup>
             <thead align="center">
                 <tr>
-                    <th colspan="3" style="align-content: center">个人基本信息</th>
+                    <th colspan>科目</th>
+                    <th colspan>成绩</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>姓名:${student.stuName}</td>
-                    <td>性别:${student.sex}</td>
-                    <td>出生日期:${student.birthday}</td>
-                </tr>
-                <tr>
-                    <td>电话:${student.telephone}</td>
-                    <td>邮箱:</td>
-                    <td>身份证号:${student.idCard}</td>
-                </tr>
-                <tr>
-                    <td>民族:${student.nation}</td>
-                    <td>籍贯:${student.birthPlace}</td>
-                    <td>婚姻状态:${student.marry}</td>
-                </tr>
-                <tr>
-                    <td>学校:${student.university}</td>
-                    <td>专业:${student.major}</td>
-                    <td></td>
-                </tr>
+                <c:forEach items="${requestScope.stuScore}" var="map">
+                    <tr>
+                        <td>${map.courseName}</td>
+                        <td>${map.score}</td>
+                    </tr>
+                </c:forEach>
+
             </tbody>
         </table>
     </div>

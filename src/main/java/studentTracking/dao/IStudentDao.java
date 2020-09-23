@@ -24,4 +24,12 @@ public interface IStudentDao {
      * @return 学生信息列表
      */
     List<Student> getStuByTeacher(@Param("page") int page, @Param("limit") int limit, @Param("teacherId") long teacherId);
+
+    /**
+     * 根据用户名和密码查询单个学生信息
+     * @param userName 用户名
+     * @Param pwd 用户密码
+     * @return
+     */
+    Student getStuInform(@Param("userName") String userName,@Param("pwd") String pwd);
 }

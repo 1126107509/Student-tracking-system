@@ -1,5 +1,6 @@
 package studentTracking.service;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 import studentTracking.model.Student;
 
@@ -21,4 +22,12 @@ public interface IStudentService {
      * @return 学生信息列表
      */
     List<Student> getStuByTeacher(int page, int limit, long teacherId);
+
+    /**
+     * 根据用户名和密码查询单个学生信息
+     * @param userName 用户名
+     * @Param pwd 用户密码
+     * @return
+     */
+    Student getStuInform(@Param("userName") String userName, @Param("pwd") String pwd);
 }

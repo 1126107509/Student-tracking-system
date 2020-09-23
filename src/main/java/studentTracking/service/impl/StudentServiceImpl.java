@@ -34,4 +34,15 @@ public class StudentServiceImpl implements IStudentService {
     public List<Student> getStuByTeacher(int page, int limit, long teacherId) {
         return studentDao.getStuByTeacher(page, limit, teacherId);
     }
+
+    /**
+     * 根据用户名和密码查询单个学生信息
+     * @param userName 用户名
+     * @Param pwd 用户密码
+     * @return
+     */
+    @Override
+    public Student getStuInform(String userName, String pwd) {
+        return studentDao.getStuInform(userName,pwd);
+    }
 }

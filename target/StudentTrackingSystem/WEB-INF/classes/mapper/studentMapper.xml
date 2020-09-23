@@ -5,6 +5,7 @@
     <sql id="baseSql">
         SELECT
             s.stuId,
+            s.userId,
             s.stuName,
             s.sex,
             s.nation,
@@ -28,7 +29,7 @@
         FROM
         student s
         LEFT JOIN class c ON s.classId = c.classId
-        LEFT JOIN `user` u ON u.userId = #{teacherId}
+        LEFT JOIN user u ON u.userId = #{teacherId}
     </select>
 
     <!--List<Student> getStuByTeacher(@Param("page") int page, @Param("limit") int limit, @Param("teacherId") long teacherId);-->
@@ -37,7 +38,19 @@
         FROM
         student s
         LEFT JOIN class c ON s.classId = c.classId
-        LEFT JOIN `user` u ON u.userId = #{teacherId}
+        LEFT JOIN user u ON u.userId = #{teacherId}
         LIMIT #{page}, #{limit}
+    </select>
+
+    <!--Student getStuInform(@Param("userName") String userName,@Param("userPwd") String userPwd)-->
+    <!--根据用户名和密码查询个人学生信息-->
+    <select id="getStuInform" resultType="Student">
+        <include refid="baseSql"></include>
+        FROM
+            student s
+        JOIN user u ON s.userId = u.userId
+        WHERE
+            u.userName = #{userName}
+        AND u.pwd = #{pwd}
     </select>
 </mapper>

@@ -2,5 +2,31 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="studentTracking.dao.IScoreDao">
-
+    <!--Map<String, List> getPersonScoe(@Param("userName")String userName,@Param("pwd")String pwd)
+    查询学生个人的成绩和班级平均成绩-->
+    <select id="getPersonScore" resultMap="scoreList">
+        SELECT
+            /*课程名称*/
+            c.courseName courseName,
+            /*单科成绩*/
+            s.score score,
+        FROM
+            score s
+        JOIN course c ON s.courseId = c.courseId
+        WHERE
+            s.stuId = (
+                SELECT
+                    stu.stuId
+                FROM
+                    student stu
+                JOIN USER u ON stu.userId = u.userId
+                WHERE
+                    u.userName = #{userName}
+                AND u.pwd = #{pwd}
+	            )
+    </select>
+    <resultMap id="scoreList" type="map">
+        <result column="courseName" property="courseName"></result>
+        <result column="score" property="score"></result>
+    </resultMap>
 </mapper>
