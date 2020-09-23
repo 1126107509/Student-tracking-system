@@ -2,7 +2,7 @@
 
 
 $.ajax({
-    url: '/menu',
+    url: '/adminmenu',
     type: 'post',
     dataType: 'json',
     success: function (data) {

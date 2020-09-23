@@ -24,10 +24,11 @@ public class User {
      * 邮箱
      */
     private String email;
+
     /**
-     * 备注
+     * 权限状态 0未授权 1授权
      */
-    private String note;
+    private int power;
     /**
      * 标识
      */
@@ -78,12 +79,12 @@ public class User {
         this.email = email;
     }
 
-    public String getNote() {
-        return note;
+    public int getPower() {
+        return power;
     }
 
-    public void setNote(String note) {
-        this.note = note;
+    public void setPower(int power) {
+        this.power = power;
     }
 
     public int getFlag() {
