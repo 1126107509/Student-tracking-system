@@ -137,7 +137,7 @@ $(function () {
             $('.name_err_msg').html('用户名不能为空');
             $('#name_err_msg').css('visibility', 'visible')
             $(this).select();
-        } else if (username.length < 4) {
+        } else if (username.length < 2) {
             /*  alert("用户名长度最低4位");*/
 
             $(this).parent().css('border-bottom-color', 'red');

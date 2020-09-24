@@ -167,14 +167,17 @@
             var username = $('input[name=username]').val();
             var password = $('input[name=password]').val();
             $.ajax({
-                url: '',
+                url: '/login',
                 type: 'post',
-                dateType: 'json',
+                data:{
+                    username:username,
+                    password:password
+                },
                 sunccess: function (data) {
-
+                    alert(data)
                 },
                 error: function () {
-
+                    alert("执行失败")
                 }
             })
 

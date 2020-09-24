@@ -4,13 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import studentTracking.dao.IScoreDao;
 import studentTracking.model.Student;
 import studentTracking.service.IScoreService;
 import studentTracking.service.IStudentService;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Map;
 
 @Controller
 public class StudentController {
@@ -18,6 +16,11 @@ public class StudentController {
     private IStudentService studentService;
     @Autowired
     private IScoreService scoreService;
+
+    @RequestMapping("/stuScore")
+    public String stuScore() {
+        return "student/stuScore";
+    }
 
     /**
      * 查询到学生的个人信息返回到前台页面
@@ -34,7 +37,7 @@ public class StudentController {
     }
 
     /**
-     *
+     * 根据用户名和密码查询个人成绩信息
      * @param request 学生个人成绩
      * @return
      */
@@ -44,10 +47,5 @@ public class StudentController {
         String pwd = "666666";
         request.setAttribute("stuScore",scoreService.getPersonScores(userName,pwd));
         return "forward:stuScore";
-    }
-
-    @RequestMapping("/stuScore")
-    public String stuScore() {
-        return "student/stuScore";
     }
 }
