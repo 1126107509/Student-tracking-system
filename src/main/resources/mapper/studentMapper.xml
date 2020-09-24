@@ -12,6 +12,7 @@
             s.birthPlace,
             s.marry,
             s.telephone,
+            s.email,
             s.idcard,
             s.university,
             s.major,
@@ -22,28 +23,54 @@
             s.deptid
     </sql>
 
-    <!--List<Student> getAllStuByTeacher(long teacherId);-->
+    <!--List<Student> getAllStuByTeacher(@Param("teacherId") long teacherId, @Param("stuName") String stuName);-->
     <select id="getAllStuByTeacher" resultType="Student">
         <include refid="baseSql"></include>
         FROM
-        student s
-        LEFT JOIN class c ON s.classId = c.classId
-        LEFT JOIN `user` u ON u.userId = #{teacherId}
+            student s
+            WHERE
+            s.classId = (
+            SELECT
+            classId
+            FROM
+            class c
+            WHERE
+            c.teacherId = #{teacherId}
+            )
+            AND s.stuName LIKE concat('%', #{stuName}, '%')
     </select>
 
-    <!--List<Student> getStuByTeacher(@Param("page") int page, @Param("limit") int limit, @Param("teacherId") long teacherId);-->
-    <select id="getStuByTeacher" resultMap="StuAndSco">
+    <!--List<Student> getStuByTeacher(@Param("page") int page,
+                                  @Param("limit") int limit,
+                                  @Param("teacherId") long teacherId,
+                                  @Param("stuName") String stuName);-->
+    <select id="getStuByTeacher" resultMap="StuScoEva">
         <include refid="baseSql"></include>,
+        sc.stuId as sId,
         sc.courseId,
-        sc.score
+        sc.score,
+        sch.evaluateId,
+        sch.stuId as stId,
+        sch.evaluatePerson,
+        sch.evaluateScore,
+        sch.evaluateContent
         FROM
-        student s
-        LEFT JOIN class c ON s.classId = c.classId
-        LEFT JOIN `user` u ON u.userId = #{teacherId}
-        LEFT JOIN score sc ON sc.stuId = s.stuId
-        LIMIT #{page}, #{limit}
+            student s
+            LEFT JOIN score sc ON sc.stuId = s.stuId
+            LEFT JOIN schoolEvaluation sch ON s.stuId = sch.stuId
+            WHERE
+            s.classId = (
+            SELECT
+            classId
+            FROM
+            class c
+            WHERE
+            c.teacherId = #{teacherId}
+            )
+            AND s.stuName LIKE concat('%', #{stuName}, '%')
+            LIMIT #{page},#{limit}
     </select>
-    <resultMap id="StuAndSco" type="Student">
+    <resultMap id="StuScoEva" type="Student">
         <id column="stuId" property="stuId"></id>
         <result column="stuName" property="stuName"></result>
         <result column="sex" property="sex"></result>
@@ -52,6 +79,7 @@
         <result column="birthPlace" property="birthPlace"></result>
         <result column="marry" property="marry"></result>
         <result column="telephone" property="telephone"></result>
+        <result column="email" property="email"></result>
         <result column="idCard" property="idCard"></result>
         <result column="university" property="university"></result>
         <result column="major" property="major"></result>
@@ -60,10 +88,36 @@
         <result column="state" property="state"></result>
         <result column="classId" property="classId"></result>
         <result column="deptId" property="deptId"></result>
+        <result column="userId" property="userId"></result>
         <collection property="scoreList" javaType="list" ofType="Score">
-            <id column="stuId" property="stuId"></id>
+            <result column="sId" property="stuId"></result>
             <result column="courseId" property="courseId"></result>
             <result column="score" property="score"></result>
         </collection>
+        <collection property="schoolEvaluation" javaType="SchoolEvaluation" ofType="SchoolEvaluation">
+            <id column="evaluateId" property="evaluateId"></id>
+            <result column="stId" property="stuId"></result>
+            <result column="evaluatePerson" property="evaluatePerson"></result>
+            <result column="evaluateScore" property="evaluateScore"></result>
+            <result column="evaluateContent" property="evaluateContent"></result>
+        </collection>
     </resultMap>
+
+    <!--Student getStuByStuId(long stuId);-->
+    <select id="getStuByStuId" resultMap="StuScoEva">
+        <include refid="baseSql"></include>,
+        sc.stuId as sId,
+        sc.courseId,
+        sc.score,
+        sch.evaluateId,
+        sch.stuId as stId,
+        sch.evaluatePerson,
+        sch.evaluateScore,
+        sch.evaluateContent
+        FROM
+        student s
+        LEFT JOIN score sc ON sc.stuId = s.stuId
+        LEFT JOIN schoolEvaluation sch ON s.stuId = sch.stuId
+        WHERE s.stuId = #{stuId}
+    </select>
 </mapper>

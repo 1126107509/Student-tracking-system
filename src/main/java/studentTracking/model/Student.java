@@ -74,23 +74,19 @@ public class Student {
      * 分数
      */
     private List<Score> scoreList;
+    /**
+     * 培训学校评价
+     */
+    private SchoolEvaluation schoolEvaluation;
 
     /**
      * 邮箱
      */
     private String email;
 
-    private long userID;
+
 
     public Student() {
-    }
-
-    public long getUserID() {
-        return userID;
-    }
-
-    public void setUserID(long userID) {
-        this.userID = userID;
     }
 
     public String getEmail() {
@@ -235,5 +231,13 @@ public class Student {
 
     public void setScoreList(List<Score> scoreList) {
         this.scoreList = scoreList;
+    }
+
+    public SchoolEvaluation getSchoolEvaluation() {
+        return schoolEvaluation;
+    }
+
+    public void setSchoolEvaluation(SchoolEvaluation schoolEvaluation) {
+        this.schoolEvaluation = schoolEvaluation;
     }
 }

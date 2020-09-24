@@ -36,6 +36,10 @@ public class User {
      * 登录时间
      */
     private String loginTime;
+    /**
+     * 老师、学生id
+     */
+    private long peopleId;
 
 
     public long getUserId() {
