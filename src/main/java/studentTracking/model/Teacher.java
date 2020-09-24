@@ -28,17 +28,6 @@ public class Teacher {
     public Teacher() {
     }
 
-    public Teacher(long teacherId, String tname, String sex, String birthday, String phone,
-                   String idCard, String photo, long userID) {
-        this.teacherId = teacherId;
-        this.tname = tname;
-        this.sex = sex;
-        this.birthday = birthday;
-        this.phone = phone;
-        this.idCard = idCard;
-        this.photo = photo;
-        this.userID = userID;
-    }
 
     public Teacher(long teacherId, String tname, String sex, String birthday, String phone,
                    String idCard, String photo) {
@@ -51,16 +40,8 @@ public class Teacher {
         this.photo = photo;
     }
 
-    //老师用户id
-    private long userID;
 
-    public long getUserID() {
-        return userID;
-    }
 
-    public void setUserID(long userID) {
-        this.userID = userID;
-    }
 
     public long getTeacherId() {
         return teacherId;
@@ -128,7 +109,6 @@ public class Teacher {
                 ", phone='" + phone + '\'' +
                 ", idCard='" + idCard + '\'' +
                 ", photo='" + photo + '\'' +
-                ", userID=" + userID +
                 '}';
     }
 }

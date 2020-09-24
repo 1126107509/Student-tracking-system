@@ -5,7 +5,7 @@
 
 
     <sql id="basesql">
-        teacherId,tname,sex,birthday,phone,idCard,photo,userId
+        teacherId,tname,sex,birthday,phone,idCard,photo
     </sql>
 
     <!--int teacherNumByCondition(@Param("condition") String condition);-->

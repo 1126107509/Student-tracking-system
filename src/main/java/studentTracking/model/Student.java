@@ -80,17 +80,9 @@ public class Student {
      */
     private String email;
 
-    private long userID;
+
 
     public Student() {
-    }
-
-    public long getUserID() {
-        return userID;
-    }
-
-    public void setUserID(long userID) {
-        this.userID = userID;
     }
 
     public String getEmail() {

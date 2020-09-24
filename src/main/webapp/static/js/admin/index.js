@@ -39,9 +39,7 @@ function sonMenu(sonmenus) {
         var str = '<dl class="layui-nav-child">';
         for (var json of sonmenus) {
             if (json.sonMenus.length == 0) {
-                str = str + '<dd class="hoverevent" data-name="content"><a href="javascript:;">' + json.menuName + '</a>';
-            }else {
-                str = str + '<dd class="unhover" data-name="content"><a href="javascript:;">' + json.menuName + '</a>';
+                str = str + '<dd  data-name="content"><a href="javascript:;">' + json.menuName + '</a>';
             }
             var sonstr = '';
             if (json.sonMenus.length != 0) {

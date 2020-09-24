@@ -38,6 +38,15 @@ public class User {
      */
     private String loginTime;
 
+    private  long peoplID;
+
+    public long getPeoplID() {
+        return peoplID;
+    }
+
+    public void setPeoplID(long peoplID) {
+        this.peoplID = peoplID;
+    }
 
     public long getUserId() {
         return userId;
