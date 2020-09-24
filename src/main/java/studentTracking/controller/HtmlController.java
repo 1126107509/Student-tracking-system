@@ -10,8 +10,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import studentTracking.model.Teacher;
+import studentTracking.model.User;
 import studentTracking.service.ITeacherService;
+import studentTracking.service.IUserService;
 
 /**
  * 控制页面跳转控制器
@@ -21,6 +24,25 @@ public class HtmlController {
 
     @Autowired
     private ITeacherService teacherService;
+    @Autowired
+    private IUserService userService;
+
+    /**
+     * 判断用户名和密码是否正确
+     * @param username 用户名
+     * @param password 密码
+     * @return
+     */
+    @RequestMapping("/login")
+    @ResponseBody
+    public String login(String username,String password) {
+        User user = userService.getUser(username,password);
+        String userId = "";
+        if (user != null) {
+           userId = "" + user.getUserId();
+        }
+        return userId;
+    }
 
     /**
      * 跳转管理员首页
