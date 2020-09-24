@@ -29,5 +29,5 @@ public interface IStudentService {
      * @Param pwd 用户密码
      * @return
      */
-    Student getStuInform(@Param("userName") String userName, @Param("pwd") String pwd);
+    Student getStuInform(String userName,String pwd);
 }

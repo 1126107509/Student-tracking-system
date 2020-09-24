@@ -18,9 +18,12 @@ public class StudentController {
     private IStudentService studentService;
     @Autowired
     private IScoreService scoreService;
+
     /**
-     * 获取登陆学生信息,并将其传输到stuShow.jsp前台页面     *
-     **/
+     * 查询到学生的个人信息返回到前台页面
+     * @param model
+     * @return 学生个人信息展示页面
+     */
     @RequestMapping("/getStuInformation")
     public String getStuInformation(Model model) {
         String userName = "林崑鹏";
@@ -31,14 +34,20 @@ public class StudentController {
     }
 
     /**
-     * 查询学生个人成绩
-     * @return 个人成绩列表
+     *
+     * @param request 学生个人成绩
+     * @return
      */
     @RequestMapping("/getStuScore")
-    public String getStuScore(Model model, HttpServletRequest request) {
+    public String getStuScore(HttpServletRequest request) {
         String userName = "林崑鹏";
         String pwd = "666666";
-        request.setAttribute("stuScore",scoreService.getPersonScore(userName,pwd));
-        return "forword:student/stuScore";
+        request.setAttribute("stuScore",scoreService.getPersonScores(userName,pwd));
+        return "forward:stuScore";
+    }
+
+    @RequestMapping("/stuScore")
+    public String stuScore() {
+        return "student/stuScore";
     }
 }
