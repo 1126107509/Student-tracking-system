@@ -20,7 +20,7 @@ import java.util.List;
 
 @Controller
 @SessionAttributes({"courseList"})
-public class Teacher {
+public class TeacherController {
     @Autowired
     private IStudentService studentService;
     @Autowired

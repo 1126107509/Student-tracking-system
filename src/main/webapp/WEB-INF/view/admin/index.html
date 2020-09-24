@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>管理员首页</title>
     <link rel="stylesheet" href="../../../static/layui/css/layui.css">
-    <link rel="stylesheet" href="../../../static/layui/css/admin.css">
+    <link rel="stylesheet" href="../../../static/layui/css/admin1.css">
     <link rel="stylesheet" href="../../../static/css/admin/index.css">
     <script src="../../../static/js/jquery3.3.1.js"></script>
     <script src="../../../static/js/admin/index.js"></script>
@@ -25,9 +25,10 @@
 
         }
 
-        /* .layui-fluid {
-             height: 507px;
-         }*/
+        #parent {
+            margin-left: 5px;
+        }
+
 
     </style>
 </head><!--layadmin-side-shrink-->
@@ -99,7 +100,8 @@
                 <div class="layui-card">
                     <div class="layui-card-body">
 
-                        <iframe src="/goteacher" frameborder="0"></iframe>
+                        <iframe id="parent" src="/goteacher" frameborder="0"
+                                scrolling="no"></iframe>
                     </div>
                 </div>
             </div>
@@ -112,94 +114,11 @@
     </div>-->
 </div>
 
-<script src="../../../static/layui/layui.js"></script>
+
+<script src="../../../static/layui/layui.all.js"></script>
 
 <script>
-    layui.use('useradmin', layui.factory('useradmin')).use(['admin', 'useradmin', 'table'], function () {
-        var $ = layui.$
-            , admin = layui.admin
-            , view = layui.view
-            , table = layui.table
-            , form = layui.form;
 
-        form.render(null, 'layadmin-useradmin-formlist');
-
-        //监听搜索
-        form.on('submit(LAY-user-back-search)', function (data) {
-            var field = data.field;
-
-            //执行重载
-            table.reload('LAY-user-back-manage', {
-                where: field
-            });
-        });
-
-        //事件
-        var active = {
-            batchdel: function () {
-                var checkStatus = table.checkStatus('LAY-user-back-manage')
-                    , checkData = checkStatus.data; //得到选中的数据
-
-                if (checkData.length === 0) {
-                    return layer.msg('请选择数据');
-                }
-
-                layer.prompt({
-                    formType: 1
-                    , title: '敏感操作，请验证口令'
-                }, function (value, index) {
-                    layer.close(index);
-
-                    layer.confirm('确定删除吗？', function (index) {
-
-                        //执行 Ajax 后重载
-                        /*
-                        admin.req({
-                          url: 'xxx'
-                          //,……
-                        });
-                        */
-                        table.reload('LAY-user-back-manage');
-                        layer.msg('已删除');
-                    });
-                });
-            }
-            , add: function () {
-                admin.popup({
-                    title: '添加管理员'
-                    , area: ['420px', '450px']
-                    , id: 'LAY-popup-useradmin-add'
-                    , success: function (layero, index) {
-                        view(this.id).render('user/administrators/adminform').done(function () {
-                            form.render(null, 'layuiadmin-form-admin');
-
-                            //监听提交
-                            form.on('submit(LAY-user-back-submit)', function (data) {
-                                var field = data.field; //获取提交的字段
-
-                                //提交 Ajax 成功后，关闭当前弹层并重载表格
-                                //$.ajax({});
-                                layui.table.reload('LAY-user-back-manage'); //重载表格
-                                layer.close(index); //执行关闭
-                            });
-                        });
-                    }
-                });
-            }
-        }
-        $('.layui-btn.layuiadmin-btn-admin').on('click', function () {
-            var type = $(this).data('type');
-            active[type] ? active[type].call(this) : '';
-        });
-    });
-</script>
-<script>
-    var width = $('.layui-card-body').css('width');
-    var height = $('.layui-show').css('height');
-    $('iframe').css('width', width);
-    $('iframe').css('height', height);
-    $($('#parent').contents()[0].body).css('width', width);
-    $($('#parent').contents()[0].body).css('height', height);
 
     function getTime() {
         var date = new Date();
@@ -229,11 +148,22 @@
     }
 
     getTime()
+    setInterval(getTime, 1000);
+
+
+    var width = $('.layui-card-body').css('width');
+    var height = $('.layui-show').css('height');
+
+    /* console.log(width + '--' + height)*/
+    $('iframe').css('width', width);
+    $('iframe').css('height', height);
+    $($('#parent').contents()[0].body).css('width', width);
+    $($('#parent').contents()[0].body).css('height', height);
 
 
     $(function () {
 
-        setInterval(getTime, 1000);
+        $('#parent').css('height','500px')
 
         $('#LAY_app_flexible').click(function () {
             $('#LAY_app').toggleClass('layadmin-side-shrink');
@@ -243,6 +173,7 @@
                 $(this).removeClass('layui-icon-spread-left').addClass('layui-icon-shrink-right');
                 $('#img').show()
                 $('#logo').hide()
+
             } else {
                 $(this).removeClass('layui-icon-shrink-right').addClass('layui-icon-spread-left');
                 $('#img').hide()
@@ -257,36 +188,46 @@
 
         });
 
-        $('.hoverevent').hover(function () {
-            $('.hoverevent').removeClass('hover-bgcolor').removeClass('font-color1')
-            $(this).addClass('hover-bgcolor')
-            $(this).children().addClass('font-color1');
-
-        }, function () {
-            $(this).removeClass('hover-bgcolor')
-            $(this).children().removeClass('font-color1');
-        })
-
-
-        $('.unhover>a').click(function () {
-            var mythis = this;
-            $(this).toggleClass('unhover .hover-noChange');
-            $(this).off("mouseout").off("mouseover").off("mousemove").off("mouseleave");
-        })
 
         $('#LAY_app_flexible').click(function () {
-            var width = $('.layui-card-body').css('width');
-            var height = $('.layui-show').css('height');
-            $('iframe').css('width', width);
-            $('iframe').css('height', height);
-            $($('#parent').contents()[0].body).css('width', width);
-            $($('#parent').contents()[0].body).css('height', height);
-            console.log(document)
+
+            //已经展开 1246px--190px  1086px
+            if ($('.layadmin-side-shrink').length == 1) {
+
+                var width = parseFloat($('.layui-card-body').css('width')) + 160 + 'px';
+                var height = parseFloat($('.layui-card-body').css('height')) - 200 + 'px';
+                $('#parent').css('width', width);
+                /*$('#parent').css('height', '440px');*/
+                /*  width = parseFloat(width) - 28 + 'px';*/
+
+
+                $($('#parent').contents()[0].getElementById('main')).css('width', width);
+               /* $($('#parent').contents()[0].getElementById('contain')).css('width', width);*/
+                $($('#parent').contents()[0].getElementsByTagName('body')).css('width', width);
+                $($('#parent').contents()[0].getElementById('main')).css('height', height);
+
+            } else {
+                var width = parseFloat($('.layui-card-body').css('width')) - 160 + 'px';
+                var height = parseFloat($('.layui-card-body').css('height')) - 200 + 'px';
+                $('#parent').css('width', width);
+
+                /*  width = parseFloat(width) - 28 + 'px';*/
+                $($('#parent').contents()[0].getElementById('main')).css('width', width);
+               /* $($('#parent').contents()[0].getElementById('contain')).css('width', width);*/
+                $($('#parent').contents()[0].getElementsByTagName('body')).css('width', width);
+                $($('#parent').contents()[0].getElementById('main')).css('height', height);
+
+
+            }
+
+
         })
 
 
     })
 
 </script>
+
+
 </body>
 </html>

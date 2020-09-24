@@ -5,7 +5,7 @@
 
 
     <sql id="basesql">
-        teacherId,tname,sex,birthday,phone,idCard,photo
+        teacherId,tname,sex,birthday,phone,idCard,photo,userId
     </sql>
 
     <!--int teacherNumByCondition(@Param("condition") String condition);-->
@@ -28,5 +28,30 @@
         limit #{page},#{limit}
     </select>
 
+    <!--  boolean addTeacher(Teacher teacher);-->
+    <insert id="addTeacher" parameterType="teacher">
+        insert into teacher  (tname,sex,birthday,phone,idCard,photo)
+         values (#{tname},#{sex},#{birthday},#{phone},#{idCard},#{photo});
+    </insert>
 
+    <!--  boolean delTeacher(int teacherId);-->
+    <delete id="delTeacher">
+        delete  from  teacher where  teacherId = #{teacherId}
+    </delete>
+
+    <!--Teacher getTeacherById(int teacherId);-->
+    <select id="getTeacherById" resultType="teacher">
+        select
+        <include refid="basesql"></include>
+        from teacher where teacherId = #{teacherId}
+    </select>
+
+    <!--boolean updateTeacher(Teacher teacher);-->
+    <update id="updateTeacher" parameterType="teacher">
+        update teacher set
+        tname = #{tname},sex = #{sex},birthday = #{birthday},phone = #{phone},
+        idCard = #{idCard},photo = #{photo}
+        where
+        teacherId = #{teacherId}
+    </update>
 </mapper>
