@@ -7,14 +7,11 @@ package studentTracking.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import studentTracking.model.User;
-import studentTracking.service.IUserService;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import studentTracking.model.Teacher;
+import studentTracking.service.ITeacherService;
 
 /**
  * 控制页面跳转控制器
@@ -23,35 +20,49 @@ import javax.servlet.http.HttpSession;
 public class HtmlController {
 
     @Autowired
-    private IUserService userService;
+    private ITeacherService teacherService;
 
+    /**
+     * 跳转管理员首页
+     *
+     * @return
+     */
     @RequestMapping("/go")
-    public String goAdminIndex () {
-       return "forward:/WEB-INF/view/login.html";
+    public String goAdminIndex() {
+        return "forward:/WEB-INF/view/admin/index.html";
     }
 
     /**
+     * 跳转教师信息页
      *
-     * @param userName 用户名
-     * @param password 密码
-     * @return 查询结果
+     * @return
      */
-    @RequestMapping("/login")
-    public String login(@RequestParam("username") String userName, String password) {
-       User user = userService.getUser(userName,password);
-       String result = "";
-       if (user == null) {
-           result = "用户不存在或用户名密码错误";
-       } else {
-           if (user.getFlag() == 0) {
-               result = " ";
-           } else if (user.getFlag() == 1) {
-               result = " ";
-           } else if (user.getFlag() == 2) {
-               result = "student/stuMain";
-           }
-       }
-       return result;
+    @RequestMapping("/goteacher")
+    public String goTeacher() {
+        return "forward:/WEB-INF/view/admin/teacherlist.html";
+    }
+
+    /**
+     * 跳转教师添加页面
+     * @return
+     */
+    @RequestMapping("/addteacher")
+    public String goAddTeacher() {
+        return "forward:/WEB-INF/view/admin/addteacher.html";
+    }
+
+    /**
+     * 跳转教师更改页面
+     * @param teacherId
+     * @param model
+     * @return
+     */
+    @RequestMapping("/udtteacher/{id}")
+    public String goAddTeacher(@PathVariable("id") int teacherId, Model model) {
+        Teacher teacher = teacherService.getTeacherById(teacherId);
+        System.out.println("teacher = " + teacher);
+        model.addAttribute("teacher", teacher);
+        return "forward:/WEB-INF/view/admin/updateteacher.jsp";
     }
 
 }

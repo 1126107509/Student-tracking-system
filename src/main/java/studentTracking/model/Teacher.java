@@ -25,6 +25,32 @@ public class Teacher {
     //图片路径
     private String photo;
 
+    public Teacher() {
+    }
+
+    public Teacher(long teacherId, String tname, String sex, String birthday, String phone,
+                   String idCard, String photo, long userID) {
+        this.teacherId = teacherId;
+        this.tname = tname;
+        this.sex = sex;
+        this.birthday = birthday;
+        this.phone = phone;
+        this.idCard = idCard;
+        this.photo = photo;
+        this.userID = userID;
+    }
+
+    public Teacher(long teacherId, String tname, String sex, String birthday, String phone,
+                   String idCard, String photo) {
+        this.teacherId = teacherId;
+        this.tname = tname;
+        this.sex = sex;
+        this.birthday = birthday;
+        this.phone = phone;
+        this.idCard = idCard;
+        this.photo = photo;
+    }
+
     //老师用户id
     private long userID;
 
@@ -90,5 +116,19 @@ public class Teacher {
 
     public void setPhoto(String photo) {
         this.photo = photo;
+    }
+
+    @Override
+    public String toString() {
+        return "Teacher{" +
+                "teacherId=" + teacherId +
+                ", tname='" + tname + '\'' +
+                ", sex='" + sex + '\'' +
+                ", birthday='" + birthday + '\'' +
+                ", phone='" + phone + '\'' +
+                ", idCard='" + idCard + '\'' +
+                ", photo='" + photo + '\'' +
+                ", userID=" + userID +
+                '}';
     }
 }
