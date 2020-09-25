@@ -84,6 +84,11 @@ public class TeacherController {
         return "teacher/modifyPwd";
     }
 
+    @RequestMapping("/toLogin")
+    public String toLogin() {
+        return "redirect:/WEB-INF/view/admin/login.html";
+    }
+
     @RequestMapping("/loginCheck")
     @ResponseBody
     public String loginCheck(String userName, String password) {

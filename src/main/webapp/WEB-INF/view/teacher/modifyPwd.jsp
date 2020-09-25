@@ -59,9 +59,12 @@
 
             $("#reNewPwd").blur(function () {
                 if ($("#reNewPwd").val() != $("#newPwd").val) {
-
+                    layer.msg("两次密码不一致");
+                    $("#modify").addClass("layui-btn-disabled");
+                } else {
+                    $("#modify").removeClass("layui-btn-disabled");
                 }
-            })
+            });
         });
     </script>
 </body>
