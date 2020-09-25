@@ -3,7 +3,6 @@ package studentTracking.service;
 import studentTracking.model.User;
 
 import java.util.List;
-import java.util.Map;
 
 public interface IUserService {
 
@@ -28,9 +27,10 @@ public interface IUserService {
      * 通过条件查询用户的总数
      *
      * @param condition 查询条件
+     * @param flag      标识
      * @return 返回总数
      */
-    int userNumByCondition(String condition);
+    int userNumByCondition(String condition, int flag);
 
 
     /**
@@ -38,12 +38,14 @@ public interface IUserService {
      * @param page
      * @param limit
      * @param condition
+     * @param flag
      * @return
      */
-    List<User> userListByCondition(int page, int limit, String condition);
+    List<User> userListByCondition(int page, int limit, String condition, int flag);
 
     /**
      * 根据用户id修改用户权限
+     *
      * @param userId
      * @param power
      * @return
@@ -52,6 +54,7 @@ public interface IUserService {
 
     /**
      * 根据用户id删除用户
+     *
      * @param userId
      * @return
      */

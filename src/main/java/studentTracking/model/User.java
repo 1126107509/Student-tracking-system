@@ -33,7 +33,7 @@ public class User {
     /**
      * 标识  教师 1
      */
-    private int flag;
+    private int flag = -1;
     /**
      * 登录时间
      */

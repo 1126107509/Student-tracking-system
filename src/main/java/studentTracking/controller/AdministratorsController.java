@@ -91,10 +91,10 @@ public class AdministratorsController {
      */
     @RequestMapping("/userpower")
     @ResponseBody
-    public String userPowerList(int page, int limit, String condition) {
-        int num = userService.userNumByCondition(condition);
+    public String userPowerList(int page, int limit, String condition, User user) {
+        int num = userService.userNumByCondition(condition, user.getFlag());
         List<User> users = userService.userListByCondition((page - 1) * limit, limit,
-                condition);
+                condition, user.getFlag());
         System.out.println("users = " + users);
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("code", 0);

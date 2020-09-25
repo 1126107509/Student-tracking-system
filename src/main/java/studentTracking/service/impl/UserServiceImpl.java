@@ -43,8 +43,8 @@ public class UserServiceImpl implements IUserService {
      * @return 返回总数
      */
     @Override
-    public int userNumByCondition(String condition) {
-        return userDao.userNumByCondition(condition);
+    public int userNumByCondition(String condition,int flag) {
+        return userDao.userNumByCondition(condition,flag);
     }
 
     /**
@@ -56,8 +56,8 @@ public class UserServiceImpl implements IUserService {
      * @return 用户集合
      */
     @Override
-    public List<User> userListByCondition(int page, int limit, String condition) {
-        return userDao.userListByCondition(page, limit, condition);
+    public List<User> userListByCondition(int page, int limit, String condition,int flag) {
+        return userDao.userListByCondition(page, limit, condition, flag);
     }
 
     /**

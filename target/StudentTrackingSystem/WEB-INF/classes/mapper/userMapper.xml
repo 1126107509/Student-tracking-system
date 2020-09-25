@@ -41,9 +41,14 @@
         USER u
         LEFT JOIN student s ON u.peopleId = s.stuId
         LEFT JOIN teacher t ON u.peopleId = t.teacherId
-        <if test="condition != null">
-            where userName like concat("%",#{condition},"%")
-        </if>
+        <where>
+            <if test="condition != null">
+                userName like concat("%",#{condition},"%")
+            </if>
+            <if test="flag > -1">
+                and flag = #{flag}
+            </if>
+        </where>
         limit #{page},#{limit}
     </select>
 
@@ -51,9 +56,14 @@
     <!-- int userNumByCondition(String condition);-->
     <select id="userNumByCondition" resultType="int">
         select count(userId) from user
-        <if test="condition != null">
-            where userName like concat("%",#{condition},"%")
-        </if>
+        <where>
+            <if test="condition != null">
+                userName like concat("%",#{condition},"%")
+            </if>
+            <if test="flag > -1">
+                and flag = #{flag}
+            </if>
+        </where>
     </select>
 
     <!-- boolean updatePower(int userId, int power);-->

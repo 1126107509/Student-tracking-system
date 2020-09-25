@@ -112,4 +112,23 @@ public class HtmlController {
         return "forward:/WEB-INF/view/admin/allotpower.html";
     }
 
+    /**
+     * 跳转学生权限
+     * @return
+     */
+    @RequestMapping("/studentpower")
+    public String goStuPower() {
+        return "forward:/WEB-INF/view/admin/studentpower.html";
+    }
+
+
+    /**
+     * 跳转老师权限
+     * @return
+     */
+    @RequestMapping("/teacherpower")
+    public String goTeaPower() {
+        return "forward:/WEB-INF/view/admin/teacherpower.html";
+    }
+
 }

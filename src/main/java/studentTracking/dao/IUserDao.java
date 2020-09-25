@@ -4,7 +4,6 @@ import org.apache.ibatis.annotations.Param;
 import studentTracking.model.User;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * 用户dao层接口
@@ -36,7 +35,7 @@ public interface IUserDao {
      * @param condition 查询条件
      * @return 返回总数
      */
-    int userNumByCondition(@Param("condition") String condition);
+    int userNumByCondition(@Param("condition") String condition, @Param("flag") int flag);
 
 
     /**
@@ -49,20 +48,22 @@ public interface IUserDao {
      */
 
     List<User> userListByCondition(@Param("page") int page, @Param("limit") int limit, @Param(
-            "condition") String condition);
+            "condition") String condition, @Param("flag") int flag);
 
 
     /**
      * 根据用户id修改用户权限
+     *
      * @param userId
      * @param power
      * @return
      */
-    boolean updatePower(@Param("userId") int userId,@Param("power") int power);
+    boolean updatePower(@Param("userId") int userId, @Param("power") int power);
 
 
     /**
      * 根据用户id删除用户
+     *
      * @param userId
      * @return
      */
