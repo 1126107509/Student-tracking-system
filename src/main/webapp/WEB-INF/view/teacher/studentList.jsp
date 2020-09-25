@@ -12,14 +12,15 @@
             <input class="layui-input" name="stuName" id="stuName" autocomplete="off" placeholder="请输入学员姓名">
         </div>
         <button class="layui-btn" data-type="reload">查询</button>
-        <table class="layui-table" lay-data="{height:490,width:613+120*${sessionScope.courseList.size()}, url:'getStuByTeacher?teacherId=1', page: true, limit: 10, limits:[10,20,30,40,50], id:'studentList'}" lay-filter="studentEvent">
+        <table class="layui-table" lay-data="{height:490,width:615+120*${sessionScope.courseList.size()}, url:'getStuByTeacher?teacherId=1&classState=${requestScope.classState}', page: true, limit: 10, limits:[10,20,30,40,50], id:'studentList'}" lay-filter="studentEvent">
             <thead>
             <tr>
                 <th lay-data="{field:'stuId', width:40}" rowspan="2">ID</th>
-                <th lay-data="{field:'stuName', width:100, event: 'studentInfo', templet: '#setName'}" rowspan="2">姓名</th>
+                <th lay-data="{field:'stuName', width:85, event: 'studentInfo', templet: '#setName'}" rowspan="2">姓名</th>
                 <th lay-data="{field:'sex', width:60}" rowspan="2">性别</th>
-                <th lay-data="{field:'university', width:150}" rowspan="2">学校</th>
-                <th lay-data="{field:'birthPlace', width:150}" rowspan="2">籍贯</th>
+                <th lay-data="{field:'university', width:140}" rowspan="2">学校</th>
+                <th lay-data="{field:'birthPlace', width:100}" rowspan="2">籍贯</th>
+                <th lay-data="{field:'className', width:75}" rowspan="2">班期</th>
                 <th lay-data="{align:'center'}" colspan="${sessionScope.courseList.size()}">培训期间测试成绩</th>
                 <th lay-data="{field:'schoolEvaluation', width:100, templet: '#setState', event: 'studentInfo'}" rowspan="2">学校评价</th>
             </tr>

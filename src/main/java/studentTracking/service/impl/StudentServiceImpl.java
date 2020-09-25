@@ -13,29 +13,30 @@ public class StudentServiceImpl implements IStudentService {
     @Autowired
     private IStudentDao studentDao;
 
-
     /**
      * 根据老师id和学生姓名查询学生信息
-     * @param teacherId 老师id
-     * @param stuName   学生姓名
+     * @param teacherId  老师id
+     * @param stuName    学生姓名
+     * @param classState 班级状态
      * @return 学生信息列表
      */
     @Override
-    public List<Student> getAllStuByTeacher(long teacherId, String stuName) {
-        return studentDao.getAllStuByTeacher(teacherId, stuName);
+    public List<Student> getAllStuByTeacher(long teacherId, String stuName, long classState) {
+        return studentDao.getAllStuByTeacher(teacherId, stuName, classState);
     }
 
     /**
      * 根据老师id和学生姓名分页查询所属学生信息
-     * @param page      页码
-     * @param limit     每页条数
-     * @param teacherId 老师id
-     * @param stuName   学生姓名
+     * @param page       页码
+     * @param limit      每页条数
+     * @param teacherId  老师id
+     * @param stuName    学生姓名
+     * @param classState 班级状态
      * @return 学生信息列表
      */
     @Override
-    public List<Student> getStuByTeacher(int page, int limit, long teacherId, String stuName) {
-        return studentDao.getStuByTeacher(page, limit, teacherId, stuName);
+    public List<Student> getStuByTeacher(int page, int limit, long teacherId, String stuName, long classState) {
+        return studentDao.getStuByTeacher(page, limit, teacherId, stuName, classState);
     }
 
     /**

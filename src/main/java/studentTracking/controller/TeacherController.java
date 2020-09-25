@@ -21,7 +21,7 @@ import java.util.Map;
 
 @Controller
 @SessionAttributes({"courseList"})
-public class Teacher {
+public class TeacherController {
     @Autowired
     private IStudentService studentService;
     @Autowired
@@ -32,11 +32,18 @@ public class Teacher {
     private IClassService classService;
     @Autowired
     private ISchoolEvaluationService schoolEvaluationService;
+    @Autowired
+    private IUserService userService;
 
     @RequestMapping("/studentList")
-    public String studentList(Model model) {
+    public String studentList(String classState, Model model) {
         List<Course> courseList = courseService.getAllCourse();
         model.addAttribute("courseList", courseList);
+        if ("0".equals(classState)) {
+            model.addAttribute("classState", "0");
+        } else {
+            model.addAttribute("classState", "1");
+        }
         return "teacher/studentList";
     }
 
@@ -60,6 +67,43 @@ public class Teacher {
         return "teacher/addStudent";
     }
 
+    @RequestMapping("/modifyPwd")
+    public String modifyPwd(String userId, Model model) {
+        long uId = Long.parseLong(userId);
+        User user = userService.getUserByUserId(uId);
+        model.addAttribute("user", user);
+        return "forward:toModifyPwd";
+    }
+
+    /**
+     * 跳转到修改密码界面
+     * @return
+     */
+    @RequestMapping("/toModifyPwd")
+    public String toModifyPwd() {
+        return "teacher/modifyPwd";
+    }
+
+    @RequestMapping("/loginCheck")
+    @ResponseBody
+    public String loginCheck(String userName, String password) {
+        long userId = userService.getUserByLogin(userName, password);
+        return Long.toString(userId);
+    }
+
+    @RequestMapping("/loginJudge")
+    public String loginJudge(String userId, Model model) {
+        User user = userService.getUserByUserId(Long.parseLong(userId));
+        model.addAttribute("user", user);
+        if (user.getFlag() == 1) {
+            return "forward:index";
+        } else if (user.getFlag() == 2) {
+            return "";
+        } else {
+            return "";
+        }
+    }
+
     /**
      * 根据老师id获取学生信息将其封装进json并返回
      * @param page
@@ -69,7 +113,7 @@ public class Teacher {
      */
     @RequestMapping("/getStuByTeacher")
     @ResponseBody
-    public Object getStuByTeacher(int page, int limit, String teacherId, String stuName) {
+    public Object getStuByTeacher(int page, int limit, String teacherId, String stuName, String classState) {
         //将前台数据进行处理
         long tId = 0;
         if (teacherId == null) {
@@ -80,12 +124,13 @@ public class Teacher {
         if (stuName == null) {
             stuName = "";
         }
+        long cState = Long.parseLong(classState);
         page = (page - 1) * limit;
 
         //根据老师id和学生姓名查询到的所有学生信息
-        List<Student> studentList = studentService.getAllStuByTeacher(tId, stuName);
+        List<Student> studentList = studentService.getAllStuByTeacher(tId, stuName,cState);
         //根据老师id和学生姓名分页查询到的所有学生信息
-        List<Student> studentListByPage = studentService.getStuByTeacher(page, limit, tId, stuName);
+        List<Student> studentListByPage = studentService.getStuByTeacher(page, limit, tId, stuName,cState);
         //查询出所有课程
         List<Course> courseList = courseService.getAllCourse();
         //将需要的数据封装到mapList
@@ -97,6 +142,7 @@ public class Teacher {
             map.put("sex", studentListByPage.get(i).getSex());
             map.put("university", studentListByPage.get(i).getUniversity());
             map.put("birthPlace", studentListByPage.get(i).getBirthPlace());
+            map.put("className", classService.getClassByCId(studentListByPage.get(i).getClassId()).getClassName());
             if (studentListByPage.get(i).getSchoolEvaluation() == null
                     || studentListByPage.get(i).getSchoolEvaluation().getEvaluateContent() == "") {
                 map.put("schoolEvaluation", "未评价");
@@ -125,6 +171,12 @@ public class Teacher {
         return jsonObject;
     }
 
+    /**
+     * 根据学号获取学生信息
+     * @param stuId 学号
+     * @param model
+     * @return
+     */
     @RequestMapping("/getStuByStuId")
     public String getStuByStuId(String stuId, Model model) {
         long sId = Integer.parseInt(stuId);
@@ -156,6 +208,13 @@ public class Teacher {
         return "forward:studentInfo";
     }
 
+    /**
+     * 编辑学生分数
+     * @param stuId
+     * @param courseId
+     * @param score
+     * @return
+     */
     @RequestMapping("/editScore")
     @ResponseBody
     public String editScore(String stuId, String courseId, String score) {
@@ -195,6 +254,15 @@ public class Teacher {
         }
     }
 
+    /**
+     * 学校评价内容
+     * @param evaluateId
+     * @param stuId
+     * @param evaluatePerson
+     * @param evaluateScore
+     * @param evaluateContent
+     * @return
+     */
     @RequestMapping("/schoolEvaluate")
     @ResponseBody
     public String schoolEvaluate(String evaluateId, String stuId,

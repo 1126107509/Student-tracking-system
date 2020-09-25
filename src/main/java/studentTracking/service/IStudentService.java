@@ -11,9 +11,12 @@ public interface IStudentService {
      * 根据老师id和学生姓名查询学生信息
      * @param teacherId 老师id
      * @param stuName 学生姓名
+     * @param classState 班级状态
      * @return 学生信息列表
      */
-    List<Student> getAllStuByTeacher(@Param("teacherId") long teacherId, @Param("stuName") String stuName);
+    List<Student> getAllStuByTeacher(@Param("teacherId") long teacherId,
+                                     @Param("stuName") String stuName,
+                                     @Param("classState") long classState);
 
     /**
      * 根据老师id和学生姓名分页查询所属学生信息
@@ -21,12 +24,14 @@ public interface IStudentService {
      * @param limit 每页条数
      * @param teacherId 老师id
      * @param stuName 学生姓名
+     * @param classState 班级状态
      * @return 学生信息列表
      */
     List<Student> getStuByTeacher(@Param("page") int page,
                                   @Param("limit") int limit,
                                   @Param("teacherId") long teacherId,
-                                  @Param("stuName") String stuName);
+                                  @Param("stuName") String stuName,
+                                  @Param("classState") long classState);
 
     /**
      * 根据学生id查询学生信息
