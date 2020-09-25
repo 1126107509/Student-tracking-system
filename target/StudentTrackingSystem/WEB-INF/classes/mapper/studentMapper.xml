@@ -12,9 +12,10 @@
             s.birthPlace,
             s.marry,
             s.telephone,
-            s.idcard,
+            s.idCard,
             s.university,
             s.major,
+            s.email,
             s.photo,
             s.note,
             s.state,
@@ -66,4 +67,93 @@
             <result column="score" property="score"></result>
         </collection>
     </resultMap>
+
+    <resultMap id="baseStu" type="Student">
+        <id column="stuId" property="stuId"></id>
+        <result column="stuName" property="stuName"></result>
+        <result column="sex" property="sex"></result>
+        <result column="nation" property="nation"></result>
+        <result column="birthday" property="birthday"></result>
+        <result column="birthPlace" property="birthPlace"></result>
+        <result column="marry" property="marry"></result>
+        <result column="telephone" property="telephone"></result>
+        <result column="idCard" property="idCard"></result>
+        <result column="university" property="university"></result>
+        <result column="major" property="major"></result>
+        <result column="photo" property="photo"></result>
+        <result column="note" property="note"></result>
+        <result column="state" property="state"></result>
+        <result column="classId" property="classId"></result>
+        <result column="deptId" property="deptId"></result>
+        <collection property="scoreList" javaType="list" ofType="Score">
+            <id column="stuId" property="stuId"></id>
+            <result column="courseId" property="courseId"></result>
+            <result column="score" property="score"></result>
+        </collection>
+    </resultMap>
+
+
+    <!--   int studentNumByCondition(@Param("condition") String condition);-->
+    <select id="studentNumByCondition" resultType="int">
+        select count(stuId) from student
+        <if test="condition != null">
+            where stuName like concat("%",#{condition},"%")
+        </if>
+    </select>
+
+    <!--List<Teacher> studentListByCondition(@Param("page") int page, @Param("limit") int limit, @Param(
+            "condition") String condition);-->
+
+    <select id="studentListByCondition" resultType="student">
+        <include refid="baseSql"></include>
+        from student s
+        <if test="condition != null">
+            where s.stuName like concat("%",#{condition},"%")
+        </if>
+        limit #{page},#{limit}
+    </select>
+
+    <!--boolean addStudent(Student student);-->
+    <insert id="addStudent" parameterType="student" keyColumn="stuId" keyProperty="stuId"
+            useGeneratedKeys="true">
+        insert into student
+        (stuName, sex, nation, birthday, birthPlace, marry, telephone, idCard, university,
+         major, email, photo, note, state)
+         values
+         (#{stuName},#{sex},#{nation},#{birthday},#{birthPlace},#{marry},#{telephone},#{idCard},#{university},
+        #{major},#{email},#{photo},#{note}, #{state})
+    </insert>
+
+
+    <!-- Student getStudentById(int stuId);-->
+    <select id="getStudentById" resultType="student">
+        <include refid="baseSql"></include>
+        from student s
+        where s.stuId = #{stuId}
+    </select>
+
+    <!-- boolean delStudent(int stuId);-->
+    <delete id="delStudent">
+        delete from student where  stuId = #{stuId}
+    </delete>
+
+    <!--boolean updateStudent(Student student);-->
+    <update id="updateStudent" parameterType="student">
+        update student set
+        stuName = #{stuName},
+        sex  =#{sex},
+        nation =#{nation},
+        birthday =#{birthday},
+        birthPlace =#{birthPlace},
+        marry =#{marry},
+        telephone =#{telephone},
+        idCard =#{idCard},
+        university =#{university},
+        major =#{major},
+        email=#{email},
+        photo =#{photo},
+        note =#{note},
+        state =#{state}
+        where stuId =#{stuId}
+    </update>
 </mapper>

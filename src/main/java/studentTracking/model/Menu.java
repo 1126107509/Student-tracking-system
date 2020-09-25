@@ -33,6 +33,8 @@ public class Menu {
      */
     private int menuType;
 
+    private String url;
+
 
     private String promptName;
     private String goal;
@@ -52,6 +54,14 @@ public class Menu {
         this.sonMenus = sonMenus;
         this.address = address;
         this.menuType = menuType;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public int getMenuType() {

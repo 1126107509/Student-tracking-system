@@ -3,4 +3,67 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="studentTracking.dao.IUserDao">
 
+
+    <!--  boolean addUser(User user);-->
+    <insert id="addUser" parameterType="user">
+        insert into user (userName,pwd,phone,power,flag,peopleID)
+        values (#{userName},#{pwd},#{phone},#{power},#{flag},#{peopleID})
+    </insert>
+
+    <!-- boolean delPersonByPersonId(int peopleID);-->
+    <delete id="delPersonByPersonId">
+        delete from user where peopleID = #{peopleID}
+    </delete>
+
+    <resultMap id="userInfo" type="User">
+        <id column="userId" property="userId"></id>
+        <result column="userName" property="userName"></result>
+        <result column="pwd" property="pwd"></result>
+        <result column="power" property="power"></result>
+        <result column="flag" property="flag"></result>
+        <result column="peopleId" property="peopleId"></result>
+        <result column="tname" property="tname"></result>
+        <result column="stuName" property="stuName"></result>
+    </resultMap>
+
+    <!--List<User> userListByCondition(int page, int limit, String condition);-->
+    <select id="userListByCondition" resultMap="userInfo">
+        SELECT
+        userId,
+        userName,
+        pwd,
+        power,
+        flag,
+        peopleId,
+        s.stuName as stuName,
+        t.tname as tname
+        FROM
+        USER u
+        LEFT JOIN student s ON u.peopleId = s.stuId
+        LEFT JOIN teacher t ON u.peopleId = t.teacherId
+        <if test="condition != null">
+            where userName like concat("%",#{condition},"%")
+        </if>
+        limit #{page},#{limit}
+    </select>
+
+
+    <!-- int userNumByCondition(String condition);-->
+    <select id="userNumByCondition" resultType="int">
+        select count(userId) from user
+        <if test="condition != null">
+            where userName like concat("%",#{condition},"%")
+        </if>
+    </select>
+
+    <!-- boolean updatePower(int userId, int power);-->
+    <update id="updatePower">
+        update user set power = #{power} where userId  = #{userId}
+    </update>
+
+    <!--boolean delUser(int userId);-->
+    <delete id="delUser">
+        delete from user where userId  = #{userId}
+    </delete>
+
 </mapper>

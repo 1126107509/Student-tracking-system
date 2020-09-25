@@ -8,6 +8,7 @@ public class User {
      * 用户id
      */
     private long userId;
+
     /**
      * 用户姓名
      */
@@ -30,7 +31,7 @@ public class User {
      */
     private int power;
     /**
-     * 标识
+     * 标识  教师 1
      */
     private int flag;
     /**
@@ -38,14 +39,59 @@ public class User {
      */
     private String loginTime;
 
-    private  long peoplID;
+    /**
+     * 对应的老师或学生的id
+     */
+    private long peopleId;
 
-    public long getPeoplID() {
-        return peoplID;
+    /**
+     * 学生名字
+     */
+    private String stuName;
+    /**
+     * 教师名字
+     */
+    private String tname;
+
+    /**
+     * 前台用于显示的名字
+     */
+    public String getRealName() {
+        return stuName == null ? tname : stuName;
     }
 
-    public void setPeoplID(long peoplID) {
-        this.peoplID = peoplID;
+
+    public String getPowerName() {
+        return power == 0 ? "未授权" : "已授权";
+    }
+
+    public String getUserType() {
+        return flag == 1 ? "教师" : "学生";
+    }
+
+    public String getStuName() {
+        return stuName;
+    }
+
+    public void setStuName(String stuName) {
+        this.stuName = stuName;
+    }
+
+    public String getTname() {
+        return tname;
+    }
+
+    public void setTname(String tname) {
+        this.tname = tname;
+    }
+
+
+    public long getPeopleId() {
+        return peopleId;
+    }
+
+    public void setPeopleId(long peopleId) {
+        this.peopleId = peopleId;
     }
 
     public long getUserId() {

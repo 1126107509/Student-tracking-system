@@ -29,7 +29,7 @@
     </select>
 
     <!--  boolean addTeacher(Teacher teacher);-->
-    <insert id="addTeacher" parameterType="teacher">
+    <insert id="addTeacher" parameterType="teacher" useGeneratedKeys="true" keyColumn="teacherId" keyProperty="teacherId">
         insert into teacher  (tname,sex,birthday,phone,idCard,photo)
          values (#{tname},#{sex},#{birthday},#{phone},#{idCard},#{photo});
     </insert>

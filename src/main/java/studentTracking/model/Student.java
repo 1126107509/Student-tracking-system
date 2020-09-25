@@ -85,6 +85,29 @@ public class Student {
     public Student() {
     }
 
+    public Student(long stuId, String stuName, String sex, String nation, String birthday,
+                   String birthPlace, String marry, String telephone, String idCard,
+                   String university, String major, String photo, String note, String state,
+                   long classId, long deptId, String email) {
+        this.stuId = stuId;
+        this.stuName = stuName;
+        this.sex = sex;
+        this.nation = nation;
+        this.birthday = birthday;
+        this.birthPlace = birthPlace;
+        this.marry = marry;
+        this.telephone = telephone;
+        this.idCard = idCard;
+        this.university = university;
+        this.major = major;
+        this.photo = photo;
+        this.note = note;
+        this.state = state;
+        this.classId = classId;
+        this.deptId = deptId;
+        this.email = email;
+    }
+
     public String getEmail() {
         return email;
     }

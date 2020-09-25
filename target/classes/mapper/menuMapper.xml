@@ -7,17 +7,18 @@
         <result column="parentMenuId" property="parentMenuId"></result>
         <result column="menuName" property="menuName"></result>
         <result column="imageShow" property="imageShow"></result>
+        <result column="url" property="url"></result>
         <collection property="sonMenus" column="menuId" ofType="menu"
                      select="listSonMenu"></collection>
     </resultMap>
 
 
     <select id="listMainMenu" resultMap="basemenu" >
-        select menuId,parentMenuId,menuName,imageShow  from menu where menuType = 0 and parentMenuId = 0
+        select menuId,parentMenuId,menuName,imageShow,url  from menu where menuType = 0 and parentMenuId = 0
     </select>
 
     <select id="listSonMenu" resultMap="basemenu" >
-        select menuId,parentMenuId,menuName,imageShow  from menu where menuType = 0 and parentMenuId = #{menuId}
+        select menuId,parentMenuId,menuName,imageShow,url  from menu where menuType = 0 and parentMenuId = #{menuId}
     </select>
 
 

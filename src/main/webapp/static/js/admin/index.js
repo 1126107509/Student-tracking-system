@@ -13,7 +13,7 @@ $.ajax({
 
         for (var json of datas) {
 
-            str = str + '<li class="layui-nav-item">\n' +
+            str = str + '<li class="layui-nav-item layui-nav-itemed">\n' +
                 '    <a href="javascript:;"  lay-direction="2">\n' +
                 '        <i class="layui-icon ' + json.imageShow + '"></i>\n' +
                 '        <cite class="font-color">' + json.menuName + '</cite>\n' +
@@ -36,10 +36,10 @@ function sonMenu(sonmenus) {
     if (sonmenus.length == 0) {
         return;
     } else {
-        var str = '<dl class="layui-nav-child">';
+        var str = '<dl class="layui-nav-child layui-nav-itemed">';
         for (var json of sonmenus) {
             if (json.sonMenus.length == 0) {
-                str = str + '<dd  data-name="content"><a href="javascript:;">' + json.menuName + '</a>';
+                str = str + '<dd><a href="' + (json.url == '' ? "javascript:;" : json.url) + '"' + (json.url == '' ? "" : 'target="frame"') + ' >' + json.menuName + '</a>';
             }
             var sonstr = '';
             if (json.sonMenus.length != 0) {

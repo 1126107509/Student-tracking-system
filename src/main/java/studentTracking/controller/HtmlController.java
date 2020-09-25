@@ -10,7 +10,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import studentTracking.model.Student;
 import studentTracking.model.Teacher;
+import studentTracking.service.IStudentService;
 import studentTracking.service.ITeacherService;
 
 /**
@@ -21,6 +23,8 @@ public class HtmlController {
 
     @Autowired
     private ITeacherService teacherService;
+    @Autowired
+    private IStudentService studentService;
 
     /**
      * 跳转管理员首页
@@ -37,7 +41,7 @@ public class HtmlController {
      *
      * @return
      */
-    @RequestMapping("/goteacher")
+    @RequestMapping("/teacher")
     public String goTeacher() {
         return "forward:/WEB-INF/view/admin/teacherlist.html";
     }
@@ -58,11 +62,54 @@ public class HtmlController {
      * @return
      */
     @RequestMapping("/udtteacher/{id}")
-    public String goAddTeacher(@PathVariable("id") int teacherId, Model model) {
+    public String goUdpTeacher(@PathVariable("id") int teacherId, Model model) {
         Teacher teacher = teacherService.getTeacherById(teacherId);
-        System.out.println("teacher = " + teacher);
         model.addAttribute("teacher", teacher);
         return "forward:/WEB-INF/view/admin/updateteacher.jsp";
+    }
+
+
+    /**
+     * 跳转教师信息页
+     *
+     * @return
+     */
+    @RequestMapping("/student")
+    public String goStudent() {
+        return "forward:/WEB-INF/view/admin/studentlist.html";
+    }
+
+    /**
+     * 跳转学生添加页面
+     * @return
+     */
+    @RequestMapping("/goAddstudent")
+    public String goAddStudent() {
+        return "forward:/WEB-INF/view/admin/addstudent.html";
+    }
+
+
+    /**
+     * 跳转学生更改页面
+     * @param stuId
+     * @param model
+     * @return
+     */
+    @RequestMapping("/updstudent/{id}")
+    public String goUdpStudent(@PathVariable("id") int stuId, Model model) {
+        Student student = studentService.getStudentById(stuId);
+        model.addAttribute("student", student);
+        return "forward:/WEB-INF/view/admin/updatestudent.jsp";
+    }
+
+
+    /**
+     * 跳转权限授权页面
+     * @return
+     */
+    @RequestMapping("/allocatepower")
+    public String goPower() {
+        return "forward:/WEB-INF/view/admin/allotpower.html";
     }
 
 }

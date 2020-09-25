@@ -105,7 +105,7 @@
                 </button>
                 <div class="layui-upload-list">
                     <img class="layui-upload-img" id="demo1"
-                         src='../../../static/${teacher.photo == null?"img/defaultl.png":teacher.photo}'>
+                         src='../../../static/${teacher.photo == null?"img/default.png":teacher.photo}'>
                     <p id="demoText"></p>
                 </div>
 
@@ -128,48 +128,7 @@
 </div>
 <script src="../../../static/layui/layui.all.js"></script>
 <script src="../../../static/js/jquery.min.js"></script>
-<script>
-    $(function () {
-        $('input[name=tname]').blur(function () {
-            if ($(this).val().trim() == '') {
-                layer.msg('姓名不能为空');
-                $(this).select().addClass('warn');
-            } else {
-                $(this).removeClass('warn');
-            }
-        })
-
-        $('input[name=idCard]').blur(function () {
-            var reg = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
-            if ($(this).val().trim() == '') {
-                layer.msg('身份证号不能为空');
-                $(this).select().addClass('warn');
-                return false;
-            } else if (reg.test($(this).val()) == false) {
-                layer.msg('身份证号不合法');
-                $(this).select().addClass('warn');
-                return false;
-            } else {
-                $(this).removeClass('warn');
-            }
-        })
-        $('input[name=phone]').blur(function () {
-            var reg = /^1[3|4|5|7|8][0-9]{9}$/;
-            if ($(this).val().trim() == '') {
-                layer.msg('联系方式不能为空');
-                $(this).select().addClass('warn');
-                return false;
-            } else if (reg.test($(this).val()) == false) {
-                layer.msg('手机号不合法');
-                $(this).select().addClass('warn');
-                return false;
-            } else {
-                $(this).removeClass('warn');
-
-            }
-        })
-    })
-</script>
+<script src="../../../static/js/admin/verify.js"></script>
 <script>
 
 
@@ -191,61 +150,35 @@
 
 
         $('#submit').click(function () {
-            var cardreg = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
-            var phonereg = /^1[3|4|5|7|8][0-9]{9}$/;
             var tname = $('input[name=tname]').val();
             var idCard = $('input[name=idCard]').val();
             var phone = $('input[name=phone]').val();
 
-            if (tname == '') {
-                layer.msg('姓名不能为空');
-                $('input[name=tname]').select().addClass('warn');
-                return false;
-            }
+            if (tname != '' && idCard != '' && phone != '') {
+                $.ajax({
+                    url: "/udttea",
+                    type: 'post',
+                    dataType: 'json',
+                    data: {
+                        'teacherId': $('input[name=teacherId]').val(),
+                        'tname': $('input[name=tname]').val(),
+                        'sex': $('input[type=radio]:checked').val(),
+                        'birthday': $('input[name=birthday]').val(),
+                        'idCard': $('input[name=idCard]').val(),
+                        'phone': $('input[name=phone]').val(),
+                        'photo': $('#photo').val(),
+                    },
+                    success: function (data) {
+                        if (data.flag) {
+                            layer.msg("教师信息修改成功，一秒后刷新页面..");
+                            setTimeout("location.href='/teacher'", 1000);
+                        } else {
+                            layer.msg("教师信息修改失败，稍后再试..");
+                        }
 
-            if (phone == '') {
-                layer.msg('联系电话不能为空');
-                $('input[name=phone]').select().addClass('warn');
-                return false;
-            } else if (phonereg.test($('input[name=phone]').val()) == false) {
-                layer.msg('手机号不合法');
-                $('input[name=phone]').select().addClass('warn');
-                return false;
-            }
-
-            if (idCard == '') {
-                layer.msg('身份证号不能为空');
-                $('input[name=idCard]').select().addClass('warn');
-                return false;
-            } else if (cardreg.test($('input[name=idCard]').val()) == false) {
-                layer.msg('身份证号不合法');
-                $('input[name=idCard]').select().addClass('warn');
-                return false;
-            }
-
-            $.ajax({
-                url: "/udttea",
-                type: 'post',
-                dataType: 'json',
-                data: {
-                    'teacherId': $('input[name=teacherId]').val(),
-                    'tname': $('input[name=tname]').val(),
-                    'sex': $('input[type=radio]:checked').val(),
-                    'birthday': $('input[name=birthday]').val(),
-                    'idCard': $('input[name=idCard]').val(),
-                    'phone': $('input[name=phone]').val(),
-                    'photo': $('#photo').val(),
-                },
-                success: function (data) {
-                    if (data.flag) {
-                        layer.msg("教师信息修改成功，一秒后刷新页面..");
-                        setTimeout("location.href='/goteacher'", 1000);
-                    } else {
-                        layer.msg("教师信息修改失败，稍后再试..");
                     }
-
-                }
-            })
+                })
+            }
         })
 
 
