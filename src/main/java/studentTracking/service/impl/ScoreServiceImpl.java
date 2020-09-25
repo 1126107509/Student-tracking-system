@@ -10,4 +10,29 @@ import java.util.List;
 
 @Service
 public class ScoreServiceImpl implements IScoreService {
+    @Autowired
+    private IScoreDao scoreDao;
+    /**
+     * 添加成绩
+     * @param stuId    学生id
+     * @param courseId 课程id
+     * @param score    成绩
+     * @return 是否添加成功
+     */
+    @Override
+    public boolean addScore(long stuId, long courseId, double score) {
+        return scoreDao.addScore(stuId, courseId, score);
+    }
+
+    /**
+     * 更新成绩
+     * @param stuId    学生id
+     * @param courseId 课程id
+     * @param score    分数
+     * @return 是否更新成功
+     */
+    @Override
+    public boolean updateScore(long stuId, long courseId, double score) {
+        return scoreDao.updateScore(stuId, courseId, score);
+    }
 }

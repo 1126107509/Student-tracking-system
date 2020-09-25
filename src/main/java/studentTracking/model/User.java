@@ -38,11 +38,11 @@ public class User {
      * 登录时间
      */
     private String loginTime;
-
     /**
-     * 对应的老师或学生的id
+     * 老师、学生id
      */
     private long peopleId;
+
 
     /**
      * 学生名字

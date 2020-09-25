@@ -54,8 +54,6 @@ public class TeacherController {
         }
         page = (page - 1) * limit;
 
-        //根据老师id查询到的所有学生信息
-        List<Student> studentList = studentService.getAllStuByTeacher(tId);
 
         //根据老师id分页查询到的所有学生信息
         List<Student> studentListByPage = studentService.getStuByTeacher(page, limit, tId);
@@ -64,7 +62,7 @@ public class TeacherController {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("code", 0);
         jsonObject.put("msg", "");
-        jsonObject.put("count", studentList.size());
+
         jsonObject.put("data", JSONArray.fromObject(studentListByPage));
 
         return jsonObject;

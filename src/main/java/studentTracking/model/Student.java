@@ -74,6 +74,10 @@ public class Student {
      * 分数
      */
     private List<Score> scoreList;
+    /**
+     * 培训学校评价
+     */
+    private SchoolEvaluation schoolEvaluation;
 
     /**
      * 邮箱
@@ -250,5 +254,13 @@ public class Student {
 
     public void setScoreList(List<Score> scoreList) {
         this.scoreList = scoreList;
+    }
+
+    public SchoolEvaluation getSchoolEvaluation() {
+        return schoolEvaluation;
+    }
+
+    public void setSchoolEvaluation(SchoolEvaluation schoolEvaluation) {
+        this.schoolEvaluation = schoolEvaluation;
     }
 }

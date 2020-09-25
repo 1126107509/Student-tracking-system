@@ -17,24 +17,30 @@ public class Class {
     /**
      * 教师id
      */
-    private String teacherId;
+    private long teacherId;
+    /**
+     * 状态
+     */
+    private long state;
     /**
      * 学生集合
      */
     private List<Student> students;
 
+    public Class() {
+    }
 
-    public Class(String className, String teacherId, List<Student> students) {
+    public Class(String className, long teacherId, List<Student> students) {
         this.className = className;
         this.teacherId = teacherId;
         this.students = students;
     }
 
-    public String getTeacherId() {
+    public long getTeacherId() {
         return teacherId;
     }
 
-    public void setTeacherId(String teacherId) {
+    public void setTeacherId(long teacherId) {
         this.teacherId = teacherId;
     }
 
@@ -60,6 +66,14 @@ public class Class {
 
     public void setClassName(String className) {
         this.className = className;
+    }
+
+    public long getState() {
+        return state;
+    }
+
+    public void setState(long state) {
+        this.state = state;
     }
 
     @Override
