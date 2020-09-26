@@ -1,4 +1,4 @@
-package studentTracking.service;
+package studentTracking.dao;
 
 import org.apache.ibatis.annotations.Param;
 import studentTracking.model.JobEvaluateOption;
@@ -6,8 +6,9 @@ import studentTracking.model.JobEvaluateOption;
 import java.util.List;
 
 /**
- * 评价实体接口1
+ * 工作评价dao层接口
  */
-public interface IJobEvaluationService {
+public interface IJobEvaluationDao {
+
 
 }

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>管理员首页</title>
     <link rel="stylesheet" href="../../../static/layui/css/layui.css">
-    <link rel="stylesheet" href="../../../static/layui/css/admin1.css">
+    <link rel="stylesheet" href="../../../static/css/admin/admin1.css">
     <link rel="stylesheet" href="../../../static/css/admin/index.css">
     <script src="../../../static/js/jquery3.3.1.js"></script>
     <script src="../../../static/js/admin/index.js"></script>
@@ -101,7 +101,7 @@
                     <div class="layui-card-body">
 
                         <iframe id="parent" src="/teacher" frameborder="0"
-                             name="frame"   scrolling="no"></iframe>
+                                name="frame" scrolling="no"></iframe>
                     </div>
                 </div>
             </div>
@@ -162,8 +162,11 @@
 
 
     $(function () {
-
-        $('#parent').css('height','500px')
+        layui.use(['element', 'table', 'jquery'], function () {
+            var element = layui.element;
+            element.init()
+        })
+        $('#parent').css('height', '500px')
 
         $('#LAY_app_flexible').click(function () {
             $('#LAY_app').toggleClass('layadmin-side-shrink');
@@ -182,27 +185,20 @@
         })
 
 
-        layui.use(['element', 'table'], function () {
-            var element = layui.element;
-            var table = layui.table;
-
-        });
-
-
         $('#LAY_app_flexible').click(function () {
 
             //已经展开 1246px--190px  1086px
             if ($('.layadmin-side-shrink').length == 1) {
 
                 var width = parseFloat($('.layui-card-body').css('width')) + 160 + 'px';
-                var height = parseFloat($('.layui-card-body').css('height')) - 200 + 'px';
+                var height = parseFloat($('.layui-card-body').css('height')) - 400 + 'px';
                 $('#parent').css('width', width);
                 /*$('#parent').css('height', '440px');*/
                 /*  width = parseFloat(width) - 28 + 'px';*/
 
 
                 $($('#parent').contents()[0].getElementById('main')).css('width', width);
-               /* $($('#parent').contents()[0].getElementById('contain')).css('width', width);*/
+                /* $($('#parent').contents()[0].getElementById('contain')).css('width', width);*/
                 $($('#parent').contents()[0].getElementsByTagName('body')).css('width', width);
                 $($('#parent').contents()[0].getElementById('main')).css('height', height);
 
@@ -213,7 +209,7 @@
 
                 /*  width = parseFloat(width) - 28 + 'px';*/
                 $($('#parent').contents()[0].getElementById('main')).css('width', width);
-               /* $($('#parent').contents()[0].getElementById('contain')).css('width', width);*/
+                /* $($('#parent').contents()[0].getElementById('contain')).css('width', width);*/
                 $($('#parent').contents()[0].getElementsByTagName('body')).css('width', width);
                 $($('#parent').contents()[0].getElementById('main')).css('height', height);
 

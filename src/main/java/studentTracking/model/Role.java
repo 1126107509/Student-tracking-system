@@ -76,4 +76,16 @@ public class Role {
     public void setRoleUserType(String roleUserType) {
         this.roleUserType = roleUserType;
     }
+
+    @Override
+    public String toString() {
+        return "Role{" +
+                "roleId=" + roleId +
+                ", roleName='" + roleName + '\'' +
+                ", roleType='" + roleType + '\'' +
+                ", note='" + note + '\'' +
+                ", flag='" + flag + '\'' +
+                ", roleUserType='" + roleUserType + '\'' +
+                '}';
+    }
 }

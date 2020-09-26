@@ -3,4 +3,27 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="studentTracking.dao.IEvaluateDateDao">
 
+    <!--boolean addJobTime(String[] times);-->
+    <insert id="addJobTime">
+        insert into evaluatedate (dateName) values
+        <foreach collection="times" separator="," item="time">
+            (#{time})
+        </foreach>
+    </insert>
+
+    <!-- int listNumJobTime();1-->
+    <select id="listNumJobTime" resultType="int">
+        select count(dateId)  from evaluatedate;
+    </select>
+
+    <!--List<EvaluateDate> listJobTime(int i, int limit);1-->
+    <select id="listJobTime" resultType="evaluateDate">
+        select dateId,dateName from evaluatedate;
+    </select>
+
+    <!-- boolean delJobTime(int dateId);1-->
+    <delete id="delJobTime">
+        delete from evaluatedate where dateId = #{dateId}
+    </delete>
+
 </mapper>

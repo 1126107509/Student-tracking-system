@@ -31,7 +31,6 @@
         }
 
 
-
         .item-label:before {
             display: inline-block;
             margin-right: 4px;
@@ -267,7 +266,7 @@
         $('#back').click(function () {
 
             var imgpath = $('#photo').val();
-            if (imgpath != '') {
+            if (imgpath != ${student.photo}) {
                 $.ajax({
                     url: "/delimg",
                     type: 'post',
@@ -317,7 +316,6 @@
             }
         })
     })
-
 
 
 </script>

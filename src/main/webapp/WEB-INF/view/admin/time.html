@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>时间节点</title>
+    <script src="../../../static/js/jquery3.3.1.js" charset="utf-8"></script>
+    <link rel="stylesheet" href="../../../static/layui/css/layui.css">
+    <link rel="stylesheet" href="../../../static/css/admin/add.css">
+    <style>
+
+        .contain {
+            /* width: 896px;*/
+            /* height: 500px;*/
+            position: relative;
+        }
+
+
+        #main {
+            margin-top: 15px;
+            display: flex;
+        }
+
+        #main-left, #main-right {
+            display: inline-block;
+            width: 40%;
+            height: 100%;
+        }
+
+        #main-right {
+            width: 60%;
+            height: 100%;
+            display: none;
+        }
+
+        .marginl {
+            margin-left: 15px;
+        }
+
+        .width {
+            width: 140px;
+        }
+
+        .border {
+            border-radius: 10px;
+        }
+
+        .opera {
+            /* margin-left: 56px;*/
+            width: 100%;
+            height: 37px;
+        }
+
+        .demoTable {
+            width: 117px;
+            margin: auto 29.5%;
+        }
+
+        .layui-table-fixed .layui-table-body {
+            height: auto !important;
+        }
+
+        .layui-table-fixed.layui-hide {
+            display: block !important;
+        }
+
+        /* .opera {
+             margin-left: 155px;
+         }*/
+
+        table tr td:first-child, table tr td:nth-child(2) {
+            text-align: center;
+        }
+
+        #t-head div {
+            display: inline-block;
+        }
+
+        #right {
+            float: right;
+        }
+
+        .check input {
+            width: 30px;
+            height: 30px;
+        }
+
+        #right-body {
+            width: 66.8%;
+            float: right;
+            margin-top: 16px;
+            margin-right: 10%;
+        }
+
+        .button-left{
+            margin-left: 17%;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="contain">
+    <div id="headline">
+        <p>时间节点</p>
+    </div>
+    <div id="main">
+        <div id="main-left">
+            <div class="opera">
+                <div class="demoTable">
+                    <div class="layui-inline marginl" id="toolbar">
+                        <button class="layui-btn layui-btn-radius layui-btn-normal"
+                                id="additem">
+                            点击添加/关闭 <i class="layui-icon">&#xe624;</i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div id="table-contain">
+                <table class="layui-hide" id="test" lay-filter="test"></table>
+            </div>
+        </div>
+        <div id="main-right">
+            <div id="right-body">
+                <div id="table">
+                    <div id="t-head">
+                        <div id="right">
+                            <div class="layui-btn-group">
+                                <button id="add" type="button" class="layui-btn layui-btn-sm">
+                                    <i class="layui-icon">&#xe654;</i>
+                                </button>
+                                <button id="del" type="button" class="layui-btn layui-btn-sm">
+                                    <i class="layui-icon">&#xe67e;</i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="t-body">
+                        <table class="layui-table">
+                            <colgroup>
+                                <col width="60">
+                                <col width="60">
+                                <col>
+                            </colgroup>
+                            <thead>
+                            <tr>
+                                <th>选择</th>
+                                <th>序号</th>
+                                <th>时间节点</th>
+                            </tr>
+                            </thead>
+                            <tbody id="tbody">
+                            <tr>
+                                <td>
+                                    <div class="check ">
+                                        <input type="checkbox" name="" title="">
+                                    </div>
+                                </td>
+                                <td>1</td>
+                                <td><input class="layui-input" placeholder="请输入时间节点" type="text"
+                                           name="content"></td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="layui-form button-left">
+                    <div class="layui-form-item">
+                        <div class="layui-input-block center">
+                            <button type="button" class="layui-btn" id="save">保存</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i
+            class="layui-icon layui-icon-delete"></i>删除</a>
+</script>
+<script src="../../../static/layui/layui.js" charset="utf-8"></script>
+<script>
+
+
+    layui.use(['table', 'layer', 'form'], function () {
+        var table = layui.table;
+        var layer = layui.layer;
+        var form = layui.form;
+
+
+        //方法级渲染
+        table.render({
+            elem: '#test'
+            , url: '/jobtime'
+            , cols: [[
+                {title: '序号', align: 'center', type: 'numbers', width: 90}
+                , {field: 'dateId', width: 0, hide: 'true'}
+                , {field: 'dateName', title: '时间结点', align: 'center'}
+                , {title: '操作', toolbar: '#barDemo', width: 120, align: 'center'}
+
+            ]]
+            , id: 'testReload'
+            , page: true
+            , height: 390
+            , limit: 5
+            , limits: [3, 5, 10, 15]
+            , done: function (res, curr, count) {
+                $('.layui-table').css("width", "100%");
+                $("th[data-field='bar']").css("border-right", 'none');
+
+            }
+        })
+
+        //监听行工具事件
+        table.on('tool(test)', function (obj) {
+            var data = obj.data;
+            var id = data.dateId;
+            //console.log(id)
+            if (obj.event === 'del') {
+                layer.confirm('真的删除行么', function (index) {
+                    $.ajax({
+                        url: "/delTime",
+                        type: 'post',
+                        dataType: 'json',
+                        data: {
+                            'dateId': id,
+                        },
+                        success: function (data) {
+                            if (data.flag) {
+                                layer.msg("该时间节点删除成功..");
+                                setTimeout(' location.reload()', 500)
+                            } else {
+                                layer.msg("该时间节点删除失败，稍后再试..");
+                            }
+
+                        }
+                    })
+
+                    layer.close(index);
+
+                });
+            }
+
+        });
+
+
+    })
+</script>
+<script>
+    $('#additem').click(function () {
+        $('#main-right').toggle()
+    })
+
+    $('#add').click(function () {
+        var tr = ' <tr>\n' +
+            '                        <td>\n' +
+            '                            <div class="check">\n' +
+            '                                <input type="checkbox" name="" title="">\n' +
+            '                            </div>\n' +
+            '                        </td>\n' +
+            '                        <td>' + ($('input:checkbox').length + 1) + '</td>\n' +
+            '                        <td><input class="layui-input" placeholder="请输入时间节点" type="text"\n' +
+            '                                   name="time"></td>\n' +
+            '                    </tr>';
+        $('#t-body tbody').append(tr);
+
+    });
+    $('#del').click(function () {
+        $('input:checked').parent().parent().parent().remove();
+        var total = $('.check');
+        for (var i = 0; i < total.length; i++) {
+            $(total[i]).parent().next().html(i + 1);
+        }
+    })
+
+    layui.use(['layer', 'layer'], function () {
+        var layer = layui.layer;
+        var $ = layui.jquery;
+        $('#save').click(function () {
+            var arr = [];
+            var checkdeinputs = $('input:checked');
+            for (var i = 0; i < checkdeinputs.length; i++) {
+                var inputchild = $(checkdeinputs[i]).parent().parent().next().next().children()[0];
+                if ($(inputchild).val().trim() == '') {
+                    layer.msg('选中的标签未添加内容，请输入内容后重新添加');
+                    $(inputchild).select();
+                    return;
+                } else {
+                    arr.push($(inputchild).val())
+                }
+
+            }
+            var join = arr.join('+');
+
+            if (checkdeinputs.length != 0) {
+                $.ajax({
+                    type: 'post',
+                    url: '/addTime',
+                    dataType: 'json',
+                    data: {'time': join},
+                    success: function (data) {
+                        if (data.flag) {
+                            layer.msg('添加成功...');
+                            /*可以修改只刷新表格*/
+                            setTimeout('location.reload()', 500)
+                        } else {
+                            layer.msg('添加失败，稍后再试...');
+                        }
+
+                    }
+
+                })
+            }else {
+                layer.msg("还未选择添加数据....")
+            }
+
+        })
+
+    });
+
+
+</script>
+
+</body>
+</html>

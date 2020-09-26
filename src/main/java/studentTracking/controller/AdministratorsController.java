@@ -8,18 +8,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import studentTracking.model.Menu;
 import studentTracking.model.Student;
-import studentTracking.model.Teacher;
-import studentTracking.model.User;
-import studentTracking.service.IMenuService;
-import studentTracking.service.IStudentService;
-import studentTracking.service.ITeacherService;
-import studentTracking.service.IUserService;
+import studentTracking.model.*;
+import studentTracking.service.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -37,6 +33,133 @@ public class AdministratorsController {
     private IUserService userService;
     @Autowired
     private IStudentService studentService;
+    @Autowired
+    private IJobEvaluateOptionService jobEvaluateOptionService;
+    @Autowired
+    private IEvaluateDateService evaluateDateService;
+
+
+    @RequestMapping("/delTime")
+    @ResponseBody
+    public String delJobTime(int dateId) {
+        boolean delJobTime = evaluateDateService.delJobTime(dateId);
+        JSONObject jsonObject = new JSONObject();
+        if (delJobTime) {
+            jsonObject.put("flag", true);
+        } else {
+            jsonObject.put("flag", false);
+        }
+        return jsonObject.toString();
+
+    }
+
+
+    /**
+     * 添加时间结点
+     * @param time
+     * @return
+     */
+    @RequestMapping("/addTime")
+    @ResponseBody
+    public String addJobTime(String time) {
+        String[] times = time.split("\\+");
+        boolean addJobItem = evaluateDateService.addJobTime(times);
+        JSONObject jsonObject = new JSONObject();
+        if (addJobItem) {
+            jsonObject.put("flag", true);
+        } else {
+            jsonObject.put("flag", false);
+        }
+        return jsonObject.toString();
+
+    }
+
+
+    /**
+     * 展示所有的时间节点
+     * @param page
+     * @param limit
+     * @return
+     */
+    @RequestMapping("/jobtime")
+    @ResponseBody
+    public String listJobTime(int page, int limit) {
+
+        int itemNum = evaluateDateService.listNumJobTime();
+        List<EvaluateDate> jobTimes = evaluateDateService.listJobTime((page - 1) * limit,
+                limit);
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("code", 0);
+        jsonObject.put("count", itemNum);
+        jsonObject.put("data", JSONArray.fromObject(jobTimes));
+        return jsonObject.toString();
+
+    }
+
+    /**
+     * 根据指定的id删除评价分项
+     *
+     * @param optionId
+     * @return
+     */
+    @RequestMapping("/deljobitem")
+    @ResponseBody
+    public String delJobItem(int optionId) {
+        boolean delJobItem = jobEvaluateOptionService.delJobItem(optionId);
+        JSONObject jsonObject = new JSONObject();
+        if (delJobItem) {
+            jsonObject.put("flag", true);
+        } else {
+            jsonObject.put("flag", false);
+        }
+        return jsonObject.toString();
+
+    }
+
+    /**
+     * 添加工作评分项1
+     *
+     * @param optionName 评分项
+     * @return
+     */
+    @RequestMapping("/addItem")
+    @ResponseBody
+    public String addJobItem(String optionName) {
+        String[] optionNames = optionName.split("\\+");
+        System.out.println("optionNames = " + Arrays.toString(optionNames));
+        boolean addJobItem = jobEvaluateOptionService.addJobItem(optionNames);
+        JSONObject jsonObject = new JSONObject();
+        if (addJobItem) {
+            jsonObject.put("flag", true);
+        } else {
+            jsonObject.put("flag", false);
+        }
+        return jsonObject.toString();
+
+    }
+
+    /**
+     * 查询所有的评分列表1
+     *
+     * @param page
+     * @param limit
+     * @return
+     */
+    @RequestMapping("/jobitem")
+    @ResponseBody
+    public String listJobItem(int page, int limit) {
+
+        int itemNum = jobEvaluateOptionService.listNumJobEvaluation();
+        List<JobEvaluateOption> jobItems = jobEvaluateOptionService.listJobItem((page - 1) * limit,
+                limit);
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("code", 0);
+        jsonObject.put("count", itemNum);
+        jsonObject.put("data", JSONArray.fromObject(jobItems));
+        return jsonObject.toString();
+
+    }
+
 
     /**
      * 根据ID删除用户
@@ -95,7 +218,6 @@ public class AdministratorsController {
         int num = userService.userNumByCondition(condition, user.getFlag());
         List<User> users = userService.userListByCondition((page - 1) * limit, limit,
                 condition, user.getFlag());
-        System.out.println("users = " + users);
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("code", 0);
         jsonObject.put("count", num);
