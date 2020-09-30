@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="studentTracking.dao.IStudentDao">
-    <sql id="baseSql">
+    <sql id="baseSql_1">
         SELECT
             s.stuId,
             s.stuName,
@@ -24,29 +24,7 @@
     </sql>
 
 
-    <resultMap id="baseStu" type="Student">
-        <id column="stuId" property="stuId"></id>
-        <result column="stuName" property="stuName"></result>
-        <result column="sex" property="sex"></result>
-        <result column="nation" property="nation"></result>
-        <result column="birthday" property="birthday"></result>
-        <result column="birthPlace" property="birthPlace"></result>
-        <result column="marry" property="marry"></result>
-        <result column="telephone" property="telephone"></result>
-        <result column="idCard" property="idCard"></result>
-        <result column="university" property="university"></result>
-        <result column="major" property="major"></result>
-        <result column="photo" property="photo"></result>
-        <result column="note" property="note"></result>
-        <result column="state" property="state"></result>
-        <result column="classId" property="classId"></result>
-        <result column="deptId" property="deptId"></result>
-        <collection property="scoreList" javaType="list" ofType="Score">
-            <id column="stuId" property="stuId"></id>
-            <result column="courseId" property="courseId"></result>
-            <result column="score" property="score"></result>
-        </collection>
-    </resultMap>
+
 
 
     <!--   int studentNumByCondition(@Param("condition") String condition);1-->
@@ -62,7 +40,7 @@
             "condition") String condition);1-->
 
     <select id="studentListByCondition" resultType="student">
-        <include refid="baseSql"></include>
+        <include refid="baseSql_1"></include>
         from student s
         <if test="condition != null">
             where s.stuName like concat("%",#{condition},"%")
@@ -85,7 +63,7 @@
 
     <!-- Student getStudentById(int stuId);1-->
     <select id="getStudentById" resultType="student">
-        <include refid="baseSql"></include>
+        <include refid="baseSql_1"></include>
         from student s
         where s.stuId = #{stuId}
     </select>

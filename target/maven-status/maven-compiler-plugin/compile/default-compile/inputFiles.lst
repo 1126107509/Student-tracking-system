@@ -1,5 +1,4 @@
 D:\jxd培训\springboot学习\StudentTrackingSystem\src\main\java\studentTracking\service\impl\CourseServiceImpl.java
-D:\jxd培训\springboot学习\StudentTrackingSystem\src\main\java\studentTracking\controller\Student.java
 D:\jxd培训\springboot学习\StudentTrackingSystem\src\main\java\studentTracking\service\IStudentService.java
 D:\jxd培训\springboot学习\StudentTrackingSystem\src\main\java\studentTracking\dao\IMenuDao.java
 D:\jxd培训\springboot学习\StudentTrackingSystem\src\main\java\studentTracking\model\JobEvaluation.java
@@ -58,6 +57,7 @@ D:\jxd培训\springboot学习\StudentTrackingSystem\src\main\java\studentTrackin
 D:\jxd培训\springboot学习\StudentTrackingSystem\src\main\java\studentTracking\dao\IEvaluateDateDao.java
 D:\jxd培训\springboot学习\StudentTrackingSystem\src\main\java\studentTracking\Test1.java
 D:\jxd培训\springboot学习\StudentTrackingSystem\src\main\java\studentTracking\model\User.java
+D:\jxd培训\springboot学习\StudentTrackingSystem\src\main\java\studentTracking\model\QueryObject.java
 D:\jxd培训\springboot学习\StudentTrackingSystem\src\main\java\studentTracking\service\impl\TeacherServiceImpl.java
 D:\jxd培训\springboot学习\StudentTrackingSystem\src\main\java\studentTracking\controller\AdministratorsController.java
 D:\jxd培训\springboot学习\StudentTrackingSystem\src\main\java\studentTracking\dao\IJobEvaluationDao.java

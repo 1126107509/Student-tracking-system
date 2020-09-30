@@ -105,7 +105,7 @@
                 </li>
                 <li class="layui-nav-item">
                     <a href="javascript:;">
-                        <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
+                        <img src="../../../static/images/head3.jpg" class="layui-nav-img">
                         ${user.userName}
                     </a>
                     <dl class="layui-nav-child">
@@ -121,8 +121,8 @@
         <div class="layui-side layui-side-menu">
             <div class="layui-side-scroll">
                 <div id="img">
-                    <div><!--<img src="../../../static/images/defaultl.png" alt="">-->
-                        <img src="http://t.cn/RCzsdCq" alt="">
+                    <div>
+                        <img src="../../../static/images/head3.jpg" alt="">
                     </div>
                     <div class="welcome"><span>欢迎使用金桥学员跟踪系统</span></div>
                 </div>
