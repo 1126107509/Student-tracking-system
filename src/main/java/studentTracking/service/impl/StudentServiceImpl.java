@@ -3,8 +3,8 @@ package studentTracking.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import studentTracking.dao.IStudentDao;
+import studentTracking.model.QueryObject;
 import studentTracking.model.Student;
-import studentTracking.model.Teacher;
 import studentTracking.service.IStudentService;
 
 import java.util.List;
@@ -15,56 +15,7 @@ public class StudentServiceImpl implements IStudentService {
     private IStudentDao studentDao;
 
     /**
-     * 根据老师id和学生姓名查询学生信息
-     * @param teacherId  老师id
-     * @param stuName    学生姓名
-     * @param classState 班级状态
-     * @return 学生信息列表
-     */
-    @Override
-    public List<Student> getAllStuByTeacher(long teacherId, String stuName, long classState) {
-        return studentDao.getAllStuByTeacher(teacherId, stuName, classState);
-    }
-
-    /**
-     * 根据老师id和学生姓名分页查询所属学生信息
-     *
-     * @param page      页码
-     * @param limit     每页条数
-     * @param teacherId 老师id
-     * @return 学生信息列表
-     */
-    @Override
-    public List<Student> getStuByTeacher(int page, int limit, long teacherId) {
-        return null;
-    }
-
-    /**
-     * 根据老师id和学生姓名分页查询所属学生信息
-     * @param page       页码
-     * @param limit      每页条数
-     * @param teacherId  老师id
-     * @param stuName    学生姓名
-     * @param classState 班级状态
-     * @return 学生信息列表
-     */
-    @Override
-    public List<Student> getStuByTeacher(int page, int limit, long teacherId, String stuName, long classState) {
-        return studentDao.getStuByTeacher(page, limit, teacherId, stuName, classState);
-    }
-
-    /**
-     * 根据学生id查询学生信息
-     * @param stuId 学生id
-     * @return 学生信息
-     */
-    @Override
-    public Student getStuByStuId(long stuId) {
-        return studentDao.getStuByStuId(stuId);
-    }
-
-    /**
-     * 通过条件查询学生的总数
+     * 通过条件查询学生的总数 1
      *
      * @param condition 查询条件
      * @return 返回总数
@@ -75,7 +26,7 @@ public class StudentServiceImpl implements IStudentService {
     }
 
     /**
-     * 通过条件查询学生信息
+     * 通过条件查询学生信息 1
      *
      * @param page      页码
      * @param limit     条数
@@ -88,7 +39,8 @@ public class StudentServiceImpl implements IStudentService {
     }
 
     /**
-     * 添加学生信息
+     * 添加学生信息1
+     *
      * @param student
      * @return
      */
@@ -98,7 +50,7 @@ public class StudentServiceImpl implements IStudentService {
     }
 
     /**
-     * 根据id获取学生信息
+     * 根据id获取学生信息 1
      *
      * @param stuId
      * @return
@@ -109,7 +61,7 @@ public class StudentServiceImpl implements IStudentService {
     }
 
     /**
-     * 根据指定的id删除学生
+     * 根据指定的id删除学生1
      *
      * @param stuId
      * @return
@@ -120,7 +72,7 @@ public class StudentServiceImpl implements IStudentService {
     }
 
     /**
-     * 修改学生信息
+     * 修改学生信息1
      *
      * @param student
      * @return
@@ -130,5 +82,50 @@ public class StudentServiceImpl implements IStudentService {
         return studentDao.updateStudent(student);
     }
 
+
+    /**
+     * 根据查询条件获取学生数量1
+     *
+     * @param qo 查询对象，封装了查询条件
+     * @return 学生数量
+     */
+    @Override
+    public int stuNumByCondition(QueryObject qo) {
+        return studentDao.stuNumByCondition(qo);
+    }
+
+    /**
+     * 根据查询条件获取学生集合1
+     *
+     * @param qo 查询对象，封装了查询条件
+     * @return 学生集合
+     */
+    @Override
+    public List<Student> stuByCondition(QueryObject qo) {
+        return studentDao.stuByCondition(qo);
+    }
+
+    /**
+     * 给选中的学生分配班级 1
+     *
+     * @param stuids  学生id数组
+     * @param classId 班级ID
+     * @return
+     */
+    @Override
+    public boolean updateStuClassId(int[] stuids, int classId, int state) {
+        return studentDao.updateStuClassId(stuids, classId, state);
+    }
+
+    /**
+     * 根据学生的id重置该学生的班级分配状态 1
+     *
+     * @param stuId
+     * @return
+     */
+    @Override
+    public boolean resetStuClassByStuId(int stuId) {
+        return studentDao.resetStuClassByStuId(stuId);
+    }
 
 }

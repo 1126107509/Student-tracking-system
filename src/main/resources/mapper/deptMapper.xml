@@ -3,4 +3,26 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="studentTracking.dao.IDeptDao">
 
+    <!-- int listNumDept();1-->
+    <select id="listNumDept" resultType="int">
+        select count(deptId)  from dept;
+    </select>
+
+    <!--List<Dept> listDept(int page, int limit);1-->
+    <select id="listDept" resultType="dept">
+        select deptId,deptName,deptAddress from dept;
+    </select>
+
+    <!-- boolean addDept(List<Dept> depts);1-->
+    <insert id="addDept">
+        insert into dept (deptName,deptAddress) values
+        <foreach collection="depts" item="dept" separator=",">
+            (#{dept.deptName}, #{dept.deptAddress})
+        </foreach>
+    </insert>
+
+    <!--boolean delDept(int deptId);1-->
+    <delete id="delDept">
+        delete from dept where deptId  = #{deptId}
+    </delete>
 </mapper>

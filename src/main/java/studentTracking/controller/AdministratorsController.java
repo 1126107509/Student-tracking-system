@@ -8,13 +8,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import studentTracking.model.Student;
+import studentTracking.model.Class;
 import studentTracking.model.*;
 import studentTracking.service.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
@@ -37,8 +39,259 @@ public class AdministratorsController {
     private IJobEvaluateOptionService jobEvaluateOptionService;
     @Autowired
     private IEvaluateDateService evaluateDateService;
+    @Autowired
+    private IClassService classService;
+    @Autowired
+    private IDeptService deptService;
 
 
+    /**
+     * 根据用户id修改密码
+     * @param user
+     * @return
+     */
+    @RequestMapping("/alter")
+    @ResponseBody
+    public String alterPwd(User user) {
+        System.out.println("user = " + user);
+        boolean alterPwd = userService.alterPwd(user);
+        System.out.println("alterPwd = " + alterPwd);
+
+        if (alterPwd) {
+            return "修改密码成功.....";
+        }
+
+        return "修改密码失败.....";
+
+    }
+
+    /**
+     * 退出系统
+     *
+     * @param request
+     * @return
+     */
+    @RequestMapping("/exit")
+    @ResponseBody
+    public String exit(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        session.getAttribute("user");
+        session.removeAttribute("user");
+        session.getAttribute("user");
+        return "退出成功,即将跳转登录页面.....";
+
+    }
+
+    /**
+     * 根据指定的id删除部门信息
+     *
+     * @param deptId
+     * @return
+     */
+
+    @RequestMapping("/deldept")
+    @ResponseBody
+    public String delDept(int deptId) {
+        boolean delJobTime = deptService.delDept(deptId);
+        JSONObject jsonObject = new JSONObject();
+        if (delJobTime) {
+            jsonObject.put("flag", true);
+        } else {
+            jsonObject.put("flag", false);
+        }
+        return jsonObject.toString();
+
+    }
+
+
+    /**
+     * 添加部门信息1
+     *
+     * @param dept
+     * @return
+     */
+    @RequestMapping("/addDept")
+    @ResponseBody
+    public String addJDept(String dept) {
+        String[] nameAndAddresss = dept.split("\\+");
+        List<Dept> depts = new ArrayList<>();
+        for (String nameAndAddress : nameAndAddresss) {
+            String[] strings = nameAndAddress.split("/");
+            Dept dep = new Dept(strings[0], strings[1]);
+            depts.add(dep);
+        }
+        boolean addDepts = deptService.addDept(depts);
+        JSONObject jsonObject = new JSONObject();
+        if (addDepts) {
+            jsonObject.put("flag", true);
+        } else {
+            jsonObject.put("flag", false);
+        }
+        return jsonObject.toString();
+
+    }
+
+
+    /**
+     * 查询部门信息1
+     *
+     * @param page
+     * @param limit
+     * @return
+     */
+    @RequestMapping("/deptlist")
+    @ResponseBody
+    public String listDept(int page, int limit) {
+
+        int classNum = deptService.listNumDept();
+        List<Dept> depts = deptService.listDept((page - 1) * limit,
+                limit);
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("code", 0);
+        jsonObject.put("count", classNum);
+        jsonObject.put("data", JSONArray.fromObject(depts));
+        return jsonObject.toString();
+
+    }
+
+    /**
+     * 重置该学生的班级分配状态 1
+     *
+     * @param stuId
+     * @return
+     */
+    @RequestMapping("/resetStu")
+    @ResponseBody
+    public String resetStuClass(int stuId) {
+        System.out.println("stuId = " + stuId);
+        boolean isReset = studentService.resetStuClassByStuId(stuId);
+        JSONObject jsonObject = new JSONObject();
+        if (isReset) {
+            jsonObject.put("flag", true);
+        } else {
+            jsonObject.put("flag", false);
+        }
+        return jsonObject.toString();
+
+    }
+
+
+    /**
+     * 为选中的学生分配班级 1
+     *
+     * @param stuids  所选择的所有学生的ID
+     * @param classId 班级id
+     * @return
+     */
+    @RequestMapping("/udtStuOfClzId")
+    @ResponseBody
+    public String updateStuClassId(@RequestParam("stuids[]") int[] stuids, @RequestParam("classId"
+    ) int classId, @RequestParam("state") int state) {
+        boolean isUdt = studentService.updateStuClassId(stuids, classId, state);
+        JSONObject jsonObject = new JSONObject();
+        if (isUdt) {
+            jsonObject.put("flag", true);
+        } else {
+            jsonObject.put("flag", false);
+        }
+        return jsonObject.toString();
+    }
+
+
+    /**
+     * 展示所有学生（分配班期）1
+     *
+     * @param qo 查询条件对象，封装了查询条件
+     * @return
+     */
+    @RequestMapping("/clzAndStus")
+    @ResponseBody
+    public String listAllStus(QueryObject qo) {
+        System.out.println("qo = " + qo);
+        int stuNum = studentService.stuNumByCondition(qo);
+        System.out.println("stuNum = " + stuNum);
+        List<Student> stus = studentService.stuByCondition(qo);
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("code", 0);
+        jsonObject.put("count", stuNum);
+        jsonObject.put("data", JSONArray.fromObject(stus));
+        System.out.println("JSONArray.fromObject(stus) = " + JSONArray.fromObject(stus));
+        return jsonObject.toString();
+
+    }
+
+
+    /**
+     * 根据ID删除班期
+     *
+     * @param classId 班期ID
+     * @return
+     */
+    @RequestMapping("/delClass")
+    @ResponseBody
+    public String delClass(int classId) {
+        boolean delClass = classService.delClass(classId);
+        JSONObject jsonObject = new JSONObject();
+        if (delClass) {
+            jsonObject.put("flag", true);
+        } else {
+            jsonObject.put("flag", false);
+        }
+        return jsonObject.toString();
+
+    }
+
+
+    /**
+     * 添加班期1
+     *
+     * @param cls
+     * @return
+     */
+    @RequestMapping("/addclass")
+    @ResponseBody
+    public String addClass(Class cls) {
+
+        boolean addClass = classService.addClass(cls);
+        JSONObject jsonObject = new JSONObject();
+        if (addClass) {
+            jsonObject.put("flag", true);
+        } else {
+            jsonObject.put("flag", false);
+        }
+        return jsonObject.toString();
+
+    }
+
+    /**
+     * 查询所有的班期1
+     *
+     * @param page
+     * @param limit
+     * @return
+     */
+    @RequestMapping("/listclass")
+    @ResponseBody
+    public String listClass(int page, int limit) {
+
+        int classNum = classService.listNumClass();
+        List<Class> classes = classService.listClass((page - 1) * limit,
+                limit);
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("code", 0);
+        jsonObject.put("count", classNum);
+        jsonObject.put("data", JSONArray.fromObject(classes));
+        return jsonObject.toString();
+
+    }
+
+
+    /**
+     * 根据指定的ID删除时间节点1
+     *
+     * @param dateId
+     * @return
+     */
     @RequestMapping("/delTime")
     @ResponseBody
     public String delJobTime(int dateId) {
@@ -55,7 +308,8 @@ public class AdministratorsController {
 
 
     /**
-     * 添加时间结点
+     * 添加时间结点1
+     *
      * @param time
      * @return
      */
@@ -76,7 +330,8 @@ public class AdministratorsController {
 
 
     /**
-     * 展示所有的时间节点
+     * 展示所有的时间节点1
+     *
      * @param page
      * @param limit
      * @return
@@ -97,7 +352,7 @@ public class AdministratorsController {
     }
 
     /**
-     * 根据指定的id删除评价分项
+     * 根据指定的id删除评价分项1
      *
      * @param optionId
      * @return
@@ -182,9 +437,28 @@ public class AdministratorsController {
 
     }
 
+    /**
+     * 根据用户id批量修改权限 1
+     *
+     * @param ids   用户id数组
+     * @param power 权限标志 0 未授权 1 授权
+     * @return
+     */
+    @RequestMapping("/updatepowers")
+    @ResponseBody
+    public String updatePowers(@RequestParam("ids[]") int[] ids, @RequestParam("power") int power) {
+        boolean isUdt = userService.updatePowerByPeopleIds(ids, power);
+        JSONObject jsonObject = new JSONObject();
+        if (isUdt) {
+            jsonObject.put("flag", true);
+        } else {
+            jsonObject.put("flag", false);
+        }
+        return jsonObject.toString();
+    }
 
     /**
-     * 更改用于权限
+     * 根据用户id更改用于权限1
      *
      * @param userId 用户id
      * @param power  0 未授权 1授权
@@ -192,7 +466,7 @@ public class AdministratorsController {
      */
     @RequestMapping("/updatepower")
     @ResponseBody
-    public String userPowerList(@RequestParam("id") int userId, int power) {
+    public String updatePower(@RequestParam("id") int userId, int power) {
         boolean isUdt = userService.updatePower(userId, power);
         JSONObject jsonObject = new JSONObject();
         if (isUdt) {
@@ -205,7 +479,7 @@ public class AdministratorsController {
 
 
     /**
-     * 用于权限信息展示
+     * 用于权限信息展示1
      *
      * @param page      页码
      * @param limit     条数
@@ -377,6 +651,12 @@ public class AdministratorsController {
 
     }
 
+    /**
+     * 更该教师信息1
+     *
+     * @param teacher
+     * @return
+     */
     @RequestMapping("/udttea")
     @ResponseBody
     public String updateTeacher(Teacher teacher) {

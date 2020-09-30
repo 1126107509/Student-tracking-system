@@ -158,4 +158,20 @@ public class User {
         this.loginTime = loginTime;
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "userId=" + userId +
+                ", userName='" + userName + '\'' +
+                ", pwd='" + pwd + '\'' +
+                ", phone='" + phone + '\'' +
+                ", email='" + email + '\'' +
+                ", power=" + power +
+                ", flag=" + flag +
+                ", loginTime='" + loginTime + '\'' +
+                ", peopleId=" + peopleId +
+                ", stuName='" + stuName + '\'' +
+                ", tname='" + tname + '\'' +
+                '}';
+    }
 }

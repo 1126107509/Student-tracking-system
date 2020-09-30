@@ -14,4 +14,67 @@
         WHERE
             classId = #{cId}
     </select>
+
+    <!-- int listNumClass();1-->
+    <select id="listNumClass" resultType="int">
+        select count(classId) from class
+    </select>
+
+    <!--1-->
+    <resultMap id="classinfo" type="class">
+        <id column="classId" property="classId"></id>
+        <result column="className" property="className"></result>
+        <result column="state" property="state"></result>
+        <association property="teacher" javaType="teacher">
+            <id column="teacherId" property="teacherId"></id>
+            <result column="tname" property="tname"></result>
+        </association>
+    </resultMap>
+
+    <!-- List<Class> listClass(int page, int limit);1-->
+    <select id="listClass" resultMap="classinfo">
+       SELECT
+            classId,
+            className,
+            state,
+            t.tname,
+            t.teacherId
+        FROM
+            class c
+        LEFT JOIN teacher t ON c.teacherId = t.teacherId
+        limit #{page},#{limit}
+    </select>
+
+    <!--  boolean addClass(Class cls);1-->
+    <insert id="addClass">
+        insert into class (className,teacherId,state)
+         values (#{className},#{teacherId},#{state});
+    </insert>
+
+    <!-- boolean delClass(int classId);1-->
+    <delete id="delClass">
+        delete from class where classId = #{classId}
+    </delete>
+
+    <!-- List<Class> getAllClass();1-->
+    <select id="getAllClass" resultType="class">
+        SELECT
+            classId,
+            className
+        FROM
+	    class;
+    </select>
+
+    <!-- List<Class> getClassOfAllot();1-->
+    <select id="getClassOfAllot" resultType="class">
+         SELECT
+            classId,
+            className
+        FROM
+            class
+        WHERE
+	state NOT IN (2)
+    </select>
+
+
 </mapper>

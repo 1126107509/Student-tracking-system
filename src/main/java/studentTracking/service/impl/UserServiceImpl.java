@@ -43,8 +43,8 @@ public class UserServiceImpl implements IUserService {
      * @return 返回总数
      */
     @Override
-    public int userNumByCondition(String condition,int flag) {
-        return userDao.userNumByCondition(condition,flag);
+    public int userNumByCondition(String condition, int flag) {
+        return userDao.userNumByCondition(condition, flag);
     }
 
     /**
@@ -56,7 +56,7 @@ public class UserServiceImpl implements IUserService {
      * @return 用户集合
      */
     @Override
-    public List<User> userListByCondition(int page, int limit, String condition,int flag) {
+    public List<User> userListByCondition(int page, int limit, String condition, int flag) {
         return userDao.userListByCondition(page, limit, condition, flag);
     }
 
@@ -84,9 +84,9 @@ public class UserServiceImpl implements IUserService {
     }
 
 
-
     /**
      * 根据用户名和密码获得登录用户id
+     *
      * @param userName 用户名
      * @param password 密码
      * @return 用户id
@@ -98,6 +98,7 @@ public class UserServiceImpl implements IUserService {
 
     /**
      * 根据用户id获取用户信息
+     *
      * @param userId 用户id
      * @return 用户信息
      */
@@ -108,6 +109,7 @@ public class UserServiceImpl implements IUserService {
 
     /**
      * 根据用户id修改密码
+     *
      * @param userId 用户id
      * @param newPwd 新密码
      * @return 是否修改成功
@@ -116,4 +118,40 @@ public class UserServiceImpl implements IUserService {
     public boolean modifyPwdByUserId(long userId, String newPwd) {
         return userDao.modifyPwdByUserId(userId, newPwd);
     }
+
+    /**
+     * 根据用户ID批量修改权限1
+     *
+     * @param ids
+     * @param power
+     * @return
+     */
+    @Override
+    public boolean updatePowerByPeopleIds(int[] ids, int power) {
+        return userDao.updatePowerByPeopleIds(ids, power);
+    }
+
+    /**
+     * 根据用户id修改登录时间 1
+     *
+     * @param userId
+     * @param loginTime
+     */
+    @Override
+    public void updateTimeByUserId(long userId, String loginTime) {
+        userDao.updateTimeByUserId(userId, loginTime);
+    }
+
+    /**
+     * 根据用户ID修改密码 1
+     *
+     * @param user 用户 实体
+     * @return
+     */
+    @Override
+    public boolean alterPwd(User user) {
+        return userDao.alterPwd(user);
+    }
+
+
 }

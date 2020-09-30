@@ -144,7 +144,7 @@ $(function () {
             $('.name_err_msg').html('用户名长度最低4位');
             $('#name_err_msg').css('visibility', 'visible')
             $(this).select();
-        }*/ else {
+        } */else {
             $(this).parent().css('border-bottom-color', '#cccccc');
             $('#name_err_msg').css('visibility', 'hidden')
 
@@ -170,6 +170,9 @@ $(function () {
             $(this).parent().css('border-bottom-color', '#cccccc');
         }
     })
+
+
+
 
 
 })

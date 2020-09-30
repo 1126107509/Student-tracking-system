@@ -19,13 +19,23 @@ public class Class {
      */
     private long teacherId;
     /**
-     * 状态
+     * 开课状态 0 未开课  1已开课  2已结课
      */
-    private long state;
+    private int state;
+
+    public void setState(int state) {
+        this.state = state;
+    }
+
     /**
      * 学生集合
      */
     private List<Student> students;
+
+    /**
+     * 教师
+     */
+    private Teacher teacher;
 
     public Class() {
     }
@@ -34,6 +44,30 @@ public class Class {
         this.className = className;
         this.teacherId = teacherId;
         this.students = students;
+    }
+
+    /** 班期状态 1
+     * 0 未开课  1已开课  2已结课'
+     * @return
+     */
+    public String getStateName() {
+        switch (state) {
+
+            case 0:
+                return "未开课";
+            case 1:
+                return "已开课";
+            default:
+                return "已结课";
+        }
+    }
+
+    public Teacher getTeacher() {
+        return teacher;
+    }
+
+    public void setTeacher(Teacher teacher) {
+        this.teacher = teacher;
     }
 
     public long getTeacherId() {
@@ -72,9 +106,6 @@ public class Class {
         return state;
     }
 
-    public void setState(long state) {
-        this.state = state;
-    }
 
     @Override
     public String toString() {

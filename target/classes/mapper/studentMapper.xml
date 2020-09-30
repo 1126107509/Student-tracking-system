@@ -23,90 +23,6 @@
             s.deptid
     </sql>
 
-    <!--List<Student> getAllStuByTeacher(@Param("teacherId") long teacherId,
-                                         @Param("stuName") String stuName),
-                                         @Param("classState") long classState;-->
-    <select id="getAllStuByTeacher" resultType="Student">
-        <include refid="baseSql"></include>
-        FROM
-            student s
-            WHERE
-            s.classId IN (
-            SELECT
-            classId
-            FROM
-            class c
-            WHERE
-            c.teacherId = #{teacherId}
-            AND c.state = #{classState}
-            )
-            AND s.stuName LIKE concat('%', #{stuName}, '%')
-    </select>
-
-    <!--List<Student> getStuByTeacher(@Param("page") int page,
-                                  @Param("limit") int limit,
-                                  @Param("teacherId") long teacherId,
-                                  @Param("stuName") String stuName),
-                                  @Param("classState") long classState;-->
-    <select id="getStuByTeacher" resultMap="StuScoEva">
-        <include refid="baseSql"></include>,
-        sc.stuId as sId,
-        sc.courseId,
-        sc.score,
-        sch.evaluateId,
-        sch.stuId as stId,
-        sch.evaluatePerson,
-        sch.evaluateScore,
-        sch.evaluateContent
-        FROM
-            student s
-            LEFT JOIN score sc ON sc.stuId = s.stuId
-            LEFT JOIN schoolEvaluation sch ON s.stuId = sch.stuId
-            WHERE
-            s.classId IN (
-            SELECT
-            classId
-            FROM
-            class c
-            WHERE
-            c.teacherId = #{teacherId}
-            AND c.state = #{classState}
-            )
-            AND s.stuName LIKE concat('%', #{stuName}, '%')
-            LIMIT #{page},#{limit}
-    </select>
-    <resultMap id="StuScoEva" type="Student">
-        <id column="stuId" property="stuId"></id>
-        <result column="stuName" property="stuName"></result>
-        <result column="sex" property="sex"></result>
-        <result column="nation" property="nation"></result>
-        <result column="birthday" property="birthday"></result>
-        <result column="birthPlace" property="birthPlace"></result>
-        <result column="marry" property="marry"></result>
-        <result column="telephone" property="telephone"></result>
-        <result column="email" property="email"></result>
-        <result column="idCard" property="idCard"></result>
-        <result column="university" property="university"></result>
-        <result column="major" property="major"></result>
-        <result column="photo" property="photo"></result>
-        <result column="note" property="note"></result>
-        <result column="state" property="state"></result>
-        <result column="classId" property="classId"></result>
-        <result column="deptId" property="deptId"></result>
-        <result column="userId" property="userId"></result>
-        <collection property="scoreList" javaType="list" ofType="Score">
-            <result column="sId" property="stuId"></result>
-            <result column="courseId" property="courseId"></result>
-            <result column="score" property="score"></result>
-        </collection>
-        <collection property="schoolEvaluation" javaType="SchoolEvaluation" ofType="SchoolEvaluation">
-            <id column="evaluateId" property="evaluateId"></id>
-            <result column="stId" property="stuId"></result>
-            <result column="evaluatePerson" property="evaluatePerson"></result>
-            <result column="evaluateScore" property="evaluateScore"></result>
-            <result column="evaluateContent" property="evaluateContent"></result>
-        </collection>
-    </resultMap>
 
     <resultMap id="baseStu" type="Student">
         <id column="stuId" property="stuId"></id>
@@ -133,7 +49,7 @@
     </resultMap>
 
 
-    <!--   int studentNumByCondition(@Param("condition") String condition);-->
+    <!--   int studentNumByCondition(@Param("condition") String condition);1-->
     <select id="studentNumByCondition" resultType="int">
         select count(stuId) from student
         <if test="condition != null">
@@ -141,8 +57,9 @@
         </if>
     </select>
 
+
     <!--List<Teacher> studentListByCondition(@Param("page") int page, @Param("limit") int limit, @Param(
-            "condition") String condition);-->
+            "condition") String condition);1-->
 
     <select id="studentListByCondition" resultType="student">
         <include refid="baseSql"></include>
@@ -153,7 +70,8 @@
         limit #{page},#{limit}
     </select>
 
-    <!--boolean addStudent(Student student);-->
+
+    <!--boolean addStudent(Student student);1-->
     <insert id="addStudent" parameterType="student" keyColumn="stuId" keyProperty="stuId"
             useGeneratedKeys="true">
         insert into student
@@ -165,19 +83,19 @@
     </insert>
 
 
-    <!-- Student getStudentById(int stuId);-->
+    <!-- Student getStudentById(int stuId);1-->
     <select id="getStudentById" resultType="student">
         <include refid="baseSql"></include>
         from student s
         where s.stuId = #{stuId}
     </select>
 
-    <!-- boolean delStudent(int stuId);-->
+    <!-- boolean delStudent(int stuId);1-->
     <delete id="delStudent">
         delete from student where  stuId = #{stuId}
     </delete>
 
-    <!--boolean updateStudent(Student student);-->
+    <!--boolean updateStudent(Student student);1-->
     <update id="updateStudent" parameterType="student">
         update student set
         stuName = #{stuName},
@@ -197,21 +115,104 @@
         where stuId =#{stuId}
     </update>
 
-    <!--Student getStuByStuId(long stuId);-->
-    <select id="getStuByStuId" resultMap="StuScoEva">
-        <include refid="baseSql"></include>,
-        sc.stuId as sId,
-        sc.courseId,
-        sc.score,
-        sch.evaluateId,
-        sch.stuId as stId,
-        sch.evaluatePerson,
-        sch.evaluateScore,
-        sch.evaluateContent
+
+    <!--int stuNumByCondition(QueryObject qo); 1-->
+    <select id="stuNumByCondition" resultType="int">
+        SELECT
+        count(s.stuId)
         FROM
         student s
-        LEFT JOIN score sc ON sc.stuId = s.stuId
-        LEFT JOIN schoolEvaluation sch ON s.stuId = sch.stuId
-        WHERE s.stuId = #{stuId}
+        LEFT JOIN class c ON s.classId = c.classId
+        LEFT JOIN teacher t ON c.teacherId = t.teacherId
+        <where>
+            <if test="stuName != null">
+                s.stuName like concat("%",#{stuName},"%")
+            </if>
+            <if test="tname != null">
+                and t.tname like concat("%",#{tname},"%")
+            </if>
+            <if test="stuState != -1">
+                and s.state = #{stuState}
+            </if>
+            <if test="classId != -1">
+                and c.classId = #{classId}
+            </if>
+            <if test="classId != -1">
+                and c.classId = #{classId}
+            </if>
+            <if test="clzState != -1">
+                and c.state = #{clzState}
+            </if>
+        </where>
+
     </select>
+    <!--1-->
+    <resultMap id="stu" type="student">
+        <id column="stuId" property="stuId"></id>
+        <result column="stuName" property="stuName"></result>
+        <result column="sstate" property="state"></result>
+        <association property="teacher" javaType="teacher">
+            <id column="teacherId" property="teacherId"></id>
+            <result column="tname" property="tname"></result>
+        </association>
+        <association property="clz" javaType="Class">
+            <id column="classId" property="classId"></id>
+            <result column="className" property="className"></result>
+            <result column="cstate" property="state"></result>
+        </association>
+    </resultMap>
+
+    <!-- List<Student> stuByCondition(QueryObject qo); 1-->
+    <select id="stuByCondition" resultMap="stu">
+        SELECT
+        s.stuId,
+        s.stuName,
+        s.state AS sstate,
+        c.className,
+        c.classId,
+        c.state AS cstate,
+        t.tname,
+        t.teacherId
+        FROM
+        student s
+        LEFT JOIN class c ON s.classId = c.classId
+        LEFT JOIN teacher t ON c.teacherId = t.teacherId
+        <where>
+            <if test="stuName != null">
+                s.stuName like concat("%",#{stuName},"%")
+            </if>
+            <if test="tname != null">
+                and t.tname like concat("%",#{tname},"%")
+            </if>
+            <if test="stuState != -1">
+                and s.state = #{stuState}
+            </if>
+            <if test="classId != -1">
+                and c.classId = #{classId}
+            </if>
+            <if test="teacherId > 0">
+                and c.teacherId = #{teacherId}
+            </if>
+            <if test="clzState != -1">
+                and c.state = #{clzState}
+            </if>
+        </where>
+        limit #{page},#{limit}
+    </select>
+
+
+    <!--  boolean updateStuClassId(int[] stuids, int classId);1-->
+    <update id="updateStuClassId">
+        update student set classId = #{classId},state=#{state} where stuId in
+        <foreach collection="stuids" separator="," open="(" close=")" item="stuId">
+            #{stuId}
+        </foreach>
+    </update>
+
+    <!-- boolean resetStuClassByStuId(int stuId);1-->
+    <update id="resetStuClassByStuId">
+        update student set state = 0 where stuId = #{stuId}
+    </update>
+
+
 </mapper>

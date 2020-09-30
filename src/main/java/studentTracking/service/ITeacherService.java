@@ -12,7 +12,7 @@ public interface ITeacherService {
 
 
     /**
-     * 通过条件查询老师的总数
+     * 通过条件查询老师的总数1
      *
      * @param condition 查询条件
      * @return 返回总数
@@ -21,8 +21,7 @@ public interface ITeacherService {
 
 
     /**
-     * 通过条件查询老师信息
-     *
+     * 通过条件查询老师信息1
      * @param page      页码
      * @param limit     条数
      * @param condition 查询条件
@@ -34,7 +33,7 @@ public interface ITeacherService {
 
 
     /**
-     * 添加教师信息
+     * 添加教师信息1
      * @param teacher 老师实体类
      * @return
      */
@@ -42,23 +41,29 @@ public interface ITeacherService {
 
 
     /**
-     * 删除教师
+     * 删除教师1
      * @param teacherId 老师id
      * @return
      */
     boolean delTeacher(int teacherId);
 
     /**
-     * 根据id查找老师
+     * 根据id查找老师1
      * @param teacherId 老师id
      * @return
      */
     Teacher getTeacherById(int teacherId);
 
     /**
-     * 教师信息的修改
+     * 教师信息的修改1
      * @param teacher
      * @return
      */
     boolean updateTeacher(Teacher teacher);
+
+    /**
+     * 获取所有的教师1
+     * @return
+     */
+    List<Teacher> getAllTeacher();
 }

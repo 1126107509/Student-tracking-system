@@ -75,5 +75,15 @@ public class TeacherServiceImpl implements ITeacherService {
         return teacherDao.updateTeacher(teacher);
     }
 
+    /**
+     * 获取所有的教师1
+     *
+     * @return
+     */
+    @Override
+    public List<Teacher> getAllTeacher() {
+        return teacherDao.getAllTeacher();
+    }
+
 
 }

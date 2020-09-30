@@ -11,7 +11,7 @@ public class Student {
      */
     private long stuId;
     /**
-     *学生姓名
+     * 学生姓名
      */
     private String stuName;
     /**
@@ -59,9 +59,9 @@ public class Student {
      */
     private String note;
     /**
-     * 目前状态
+     * 目前状态 0 未分配班级 1 培训中2  试用期3已转正
      */
-    private String state;
+    private int state;
     /**
      * 班级id
      */
@@ -84,6 +84,15 @@ public class Student {
      */
     private String email;
 
+    /**
+     * 教师对象
+     */
+    private Teacher teacher;
+
+    /**
+     * 班期对象
+     */
+    private Class clz;
 
 
     public Student() {
@@ -91,7 +100,7 @@ public class Student {
 
     public Student(long stuId, String stuName, String sex, String nation, String birthday,
                    String birthPlace, String marry, String telephone, String idCard,
-                   String university, String major, String photo, String note, String state,
+                   String university, String major, String photo, String note, int state,
                    long classId, long deptId, String email) {
         this.stuId = stuId;
         this.stuName = stuName;
@@ -110,6 +119,46 @@ public class Student {
         this.classId = classId;
         this.deptId = deptId;
         this.email = email;
+    }
+
+    /** 学生状态 1
+     * 0 未分配班级 1 培训中2  试用期 3已转正
+     *
+     * @return
+     */
+    public String getStuState() {
+        switch (state) {
+
+            case 0:
+                return "未分配班级";
+            case 1:
+                return "培训中";
+            case 2:
+                return "试用期";
+            default:
+                return "已转正";
+        }
+    }
+
+
+
+
+
+
+    public Teacher getTeacher() {
+        return teacher;
+    }
+
+    public void setTeacher(Teacher teacher) {
+        this.teacher = teacher;
+    }
+
+    public Class getClz() {
+        return clz;
+    }
+
+    public void setClz(Class clz) {
+        this.clz = clz;
     }
 
     public String getEmail() {
@@ -224,11 +273,11 @@ public class Student {
         this.note = note;
     }
 
-    public String getState() {
+    public int getState() {
         return state;
     }
 
-    public void setState(String state) {
+    public void setState(int state) {
         this.state = state;
     }
 
@@ -262,5 +311,32 @@ public class Student {
 
     public void setSchoolEvaluation(SchoolEvaluation schoolEvaluation) {
         this.schoolEvaluation = schoolEvaluation;
+    }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "stuId=" + stuId +
+                ", stuName='" + stuName + '\'' +
+                ", sex='" + sex + '\'' +
+                ", nation='" + nation + '\'' +
+                ", birthday='" + birthday + '\'' +
+                ", birthPlace='" + birthPlace + '\'' +
+                ", marry='" + marry + '\'' +
+                ", telephone='" + telephone + '\'' +
+                ", idCard='" + idCard + '\'' +
+                ", university='" + university + '\'' +
+                ", major='" + major + '\'' +
+                ", photo='" + photo + '\'' +
+                ", note='" + note + '\'' +
+                ", state=" + state +
+                ", classId=" + classId +
+                ", deptId=" + deptId +
+                ", scoreList=" + scoreList +
+                ", schoolEvaluation=" + schoolEvaluation +
+                ", email='" + email + '\'' +
+                ", teacher=" + teacher +
+                ", clz=" + clz +
+                '}';
     }
 }

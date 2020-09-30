@@ -12,14 +12,5 @@ import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class StudentController {
-    @Autowired
-    private IStudentService studentService;
-    @Autowired
-    private IScoreService scoreService;
-
-    @RequestMapping("/stuScore")
-    public String stuScore() {
-        return "student/stuScore";
-    }
 
 }

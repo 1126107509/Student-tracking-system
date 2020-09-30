@@ -13,9 +13,17 @@ import studentTracking.model.User;
  */
 public interface IUserDao {
 
+    /**
+     * 根据用户ID批量修改权限1
+     * @param ids
+     * @param power
+     * @return
+     */
+    boolean updatePowerByPeopleIds(@Param("ids") int[] ids, @Param("power") int power);
+
 
     /**
-     * 添加用户信息
+     * 添加用户信息1
      *
      * @param user
      * @return
@@ -24,7 +32,7 @@ public interface IUserDao {
 
 
     /**
-     * 根据指定的personId删除用户
+     * 根据指定的personId删除用户1
      *
      * @param peopleID
      * @return
@@ -33,7 +41,7 @@ public interface IUserDao {
 
 
     /**
-     * 通过条件查询用户的总数
+     * 通过条件查询用户的总数1
      *
      * @param condition 查询条件
      * @return 返回总数
@@ -42,7 +50,7 @@ public interface IUserDao {
 
 
     /**
-     * 通过条件查询用户信息
+     * 通过条件查询用户信息1
      *
      * @param page      页码
      * @param limit     条数
@@ -55,7 +63,7 @@ public interface IUserDao {
 
 
     /**
-     * 根据用户id修改用户权限
+     * 根据用户id修改用户权限1
      *
      * @param userId
      * @param power
@@ -65,7 +73,7 @@ public interface IUserDao {
 
 
     /**
-     * 根据用户id删除用户
+     * 根据用户id删除用户1
      *
      * @param userId
      * @return
@@ -93,4 +101,20 @@ public interface IUserDao {
      * @return 是否修改成功
      */
     boolean modifyPwdByUserId(@Param("userId") long userId, @Param("newPwd") String newPwd);
+
+
+    /**
+     * 根据用户id修改登录时间 1
+     * @param userId
+     * @param loginTime
+     */
+    void updateTimeByUserId(@Param("userId") long userId,@Param("loginTime") String loginTime);
+
+
+    /**
+     * 根据用户ID修改密码 1
+     * @param user 用户 实体
+     * @return
+     */
+    boolean alterPwd(User user);
 }

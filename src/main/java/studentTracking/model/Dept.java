@@ -17,6 +17,14 @@ public class Dept {
      */
     private String deptAddress;
 
+    public Dept(String deptName, String deptAddress) {
+        this.deptName = deptName;
+        this.deptAddress = deptAddress;
+    }
+
+    public Dept() {
+    }
+
     public long getDeptId() {
         return deptId;
     }

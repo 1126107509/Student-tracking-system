@@ -85,4 +85,26 @@ public interface IUserService {
      */
     boolean modifyPwdByUserId(@Param("userId") long userId, @Param("newPwd") String newPwd);
 
+    /**
+     * 根据用户ID批量修改权限1
+     * @param ids
+     * @param power
+     * @return
+     */
+    boolean updatePowerByPeopleIds(int[] ids, int power);
+
+
+    /**
+     * 根据用户id修改登录时间 1
+     * @param userId
+     * @param loginTime
+     */
+    void updateTimeByUserId(long userId, String loginTime);
+
+    /**
+     * 根据用户ID修改密码 1
+     * @param user 用户 实体
+     * @return
+     */
+    boolean alterPwd(User user);
 }
